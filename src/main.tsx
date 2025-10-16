@@ -15,6 +15,7 @@ import './index.css'
 
 
 import { RouterProvider } from 'react-router';
+import HomeSistion from '@/compounte/layout/pagas/Home/Home.tsx';
 
 
 // import { ThemeProvider } from '@/compounte/povider/them-poider.tsx';
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
     Component: App,
     children: [
       // ...existing code...
+      {
+        index: true,
+        Component: HomeSistion
+      }
 
     ]
   },
