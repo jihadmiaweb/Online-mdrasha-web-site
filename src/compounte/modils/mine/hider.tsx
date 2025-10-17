@@ -16,7 +16,7 @@ function Hider() {
         { name: "Pricing", to: "/" },
         { name: "About Us", to: "/AboutPagase" },
         { name: "Contact Us", to: "/ContactSection" },
-        { name: "Blog", to: "/blog" },
+        { name: "Blog", to: "/BologPagas" },
     ];
 
     return (
@@ -36,7 +36,7 @@ function Hider() {
                             to={item.to}
                             className={({ isActive }) =>
                                 isActive
-                                    ? "text-indigo-600"
+                                    ? "text-gray-950"
                                     : "hover:text-indigo-600 transition-colors"
                             }
                         >

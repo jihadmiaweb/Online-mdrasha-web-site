@@ -20,6 +20,7 @@ import HomeSistion from '@/compounte/layout/pagas/Home/Home.tsx';
 import FreeTrialJoinForm from '@/compounte/layout/pagas/FreeTrailPagas/FreeTrailPagas.tsx';
 import ContactSection from '@/compounte/layout/pagas/contactUs.tsx';
 import AboutPagase from '@/compounte/layout/pagas/AboutPagas.tsx';
+import BologPagas from '@/compounte/layout/pagas/Bologpagas.tsx';
 
 
 
@@ -49,6 +50,11 @@ const router = createBrowserRouter([
       {
         path: "/AboutPagase",
         Component: AboutPagase,
+      },
+
+      {
+        path: "/BologPagas",
+        Component: BologPagas,
       }
 
 
