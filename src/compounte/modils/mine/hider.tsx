@@ -53,8 +53,10 @@ function Hider() {
                         </Button>
                     </Link>
                     <div className="flex items-center gap-3 text-gray-800 text-xl">
-                        <MdAccountCircle />
-                        <button onClick={() => setSearchOpen(true)}>
+                        <Link to={"/Myaccountpagas"}>
+                            <MdAccountCircle />
+                        </Link>
+                        <button className="cursor-pointer" onClick={() => setSearchOpen(true)}>
                             <FaSearch />
                         </button>
                     </div>

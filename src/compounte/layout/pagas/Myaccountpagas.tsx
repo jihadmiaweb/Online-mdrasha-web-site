@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import CourseGrid from "@/compounte/user/BologPagasAllItem/CourseGrid";
-const BologPagas = () => {
+import Login05Page from "@/compounte/auth/login";
+
+const Myaccountpagas = () => {
     const bgStyle = {
         width: "100%",
         height: "50vh",
@@ -25,18 +26,19 @@ const BologPagas = () => {
                     viewport={{ once: true }} // একবারই animate হবে
                     className="relative z-10 text-center"
                 >
-                    <h1 className="text-5xl font-bold text-white drop-shadow-lg">Blog</h1>
+                    <h1 className="text-5xl font-bold text-white drop-shadow-lg">My account</h1>
                     <span className="pt-2 text-white text-center font-bold block">
                         <Link to="/" className="hover:underline text-blue-100">
                             Home
                         </Link>{" "}
-                        » Blog
+                        » My account
                     </span>
                 </motion.div>
             </div>
-            <CourseGrid />
+            <Login05Page />
+
         </div>
     );
 };
 
-export default BologPagas
+export default Myaccountpagas;

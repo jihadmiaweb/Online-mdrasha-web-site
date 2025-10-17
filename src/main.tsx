@@ -21,6 +21,12 @@ import FreeTrialJoinForm from '@/compounte/layout/pagas/FreeTrailPagas/FreeTrail
 import ContactSection from '@/compounte/layout/pagas/contactUs.tsx';
 import AboutPagase from '@/compounte/layout/pagas/AboutPagas.tsx';
 import BologPagas from '@/compounte/layout/pagas/Bologpagas.tsx';
+import Myaccountpagas from '@/compounte/layout/pagas/Myaccountpagas.tsx';
+import OnlineQuranCourse from '@/compounte/user/BologPagasAllItem/OnlineQuranCourse.tsx';
+import InternationalIslamicStudies from '@/compounte/user/BologPagasAllItem/InternationalIslamicStudies.tsx';
+import OnlineIslamicClassForAdults from '@/compounte/user/BologPagasAllItem/OnlineIslamicClassForAdults.tsx';
+import BengaliIslamicLearningProgram from '@/compounte/user/BologPagasAllItem/BengaliIslamicLearningProgram.tsx';
+import QuranicInstituteOnline from '@/compounte/user/BologPagasAllItem/QuranicInstituteOnline.tsx';
 
 
 
@@ -44,6 +50,10 @@ const router = createBrowserRouter([
         Component: FreeTrialJoinForm,
       },
       {
+        path: "/Myaccountpagas",
+        Component: Myaccountpagas,
+      },
+      {
         path: "/ContactSection",
         Component: ContactSection,
       },
@@ -51,11 +61,34 @@ const router = createBrowserRouter([
         path: "/AboutPagase",
         Component: AboutPagase,
       },
-
+      // Bolog
       {
         path: "/BologPagas",
         Component: BologPagas,
-      }
+      },
+
+      {
+        path: "/OnlineQuranCourse",
+        Component: OnlineQuranCourse,
+      },
+
+      {
+        path: "/InternationalIslamicStudies",
+        Component: InternationalIslamicStudies,
+      },
+      {
+        path: "/OnlineIslamicClassForAdults",
+        Component: OnlineIslamicClassForAdults,
+      },
+      {
+        path: "/BengaliIslamicLearningProgram",
+        Component: BengaliIslamicLearningProgram,
+      },
+      {
+        path: "/QuranicInstituteOnline",
+        Component: QuranicInstituteOnline,
+      },
+
 
 
     ]
