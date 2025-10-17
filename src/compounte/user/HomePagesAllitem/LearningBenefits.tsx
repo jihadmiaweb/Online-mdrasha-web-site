@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 
 const LearningBenefits = () => {
     return (
@@ -44,12 +45,12 @@ const LearningBenefits = () => {
                         </table>
                     </div>
 
-                    <a
-                        href="#"
+                    <Link
+                        to="/FreeTrailPagas"
                         className="inline-block bg-blue-900 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all duration-300"
                     >
                         JOIN THE FREE TRIAL CLASS
-                    </a>
+                    </Link>
                 </motion.div>
 
                 {/* Right Image - scroll from bottom */}

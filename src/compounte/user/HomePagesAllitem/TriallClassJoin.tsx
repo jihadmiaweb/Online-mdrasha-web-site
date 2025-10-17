@@ -79,7 +79,7 @@ function TriallClassJoin() {
                     whileTap={{ scale: 0.95 }}
                     className="mt-12 bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-4 rounded-lg transition-all"
                 >
-                    <Link to={"/"} className="cursor-pointer">
+                    <Link to={"/FreeTrailPagas"} className="cursor-pointer">
                         Join The Free Trial Class
                     </Link>
                 </motion.button>

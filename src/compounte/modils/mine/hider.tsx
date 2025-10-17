@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-import { NavLink, Outlet } from "react-router";
+import { Link, NavLink, Outlet } from "react-router";
 import { MdAccountCircle } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
@@ -12,10 +12,10 @@ function Hider() {
     // Desktop and mobile menu items
     const navItems = [
         { name: "Home", to: "/" },
-        { name: "All Courses", to: "/about" },
-        { name: "Pricing", to: "/services" },
-        { name: "About Us", to: "/portfolio" },
-        { name: "Contact Us", to: "/contact" },
+        { name: "All Courses", to: "/" },
+        { name: "Pricing", to: "/" },
+        { name: "About Us", to: "/AboutPagase" },
+        { name: "Contact Us", to: "/ContactSection" },
         { name: "Blog", to: "/blog" },
     ];
 
@@ -47,9 +47,11 @@ function Hider() {
 
                 {/* Right Icons & Button */}
                 <div className="flex items-center gap-4">
-                    <Button className="bg-blue-600 p-2 rounded-2xl text-white">
-                        FREE TRIAL
-                    </Button>
+                    <Link to="/FreeTrailPagas">
+                        <Button className="bg-blue-600 cursor-pointer p-2 rounded-2xl text-white">
+                            FREE TRIAL
+                        </Button>
+                    </Link>
                     <div className="flex items-center gap-3 text-gray-800 text-xl">
                         <MdAccountCircle />
                         <button onClick={() => setSearchOpen(true)}>
@@ -75,6 +77,7 @@ function Hider() {
             >
                 <div className="flex flex-col gap-4 font-bold px-6 py-6">
                     {navItems.map((item) => (
+
                         <NavLink
                             key={item.to}
                             to={item.to}
@@ -91,12 +94,14 @@ function Hider() {
             {searchOpen && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
                     <div className="bg-white rounded-lg w-11/12 max-w-md p-6 relative">
+
                         <button
                             className="absolute top-3 right-3 text-gray-600 hover:text-gray-900"
                             onClick={() => setSearchOpen(false)}
                         >
                             <X size={24} />
                         </button>
+
                         <h2 className="text-lg font-semibold mb-4">Search</h2>
                         <input
                             type="text"

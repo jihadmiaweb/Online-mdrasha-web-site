@@ -17,6 +17,12 @@ import './index.css'
 import { RouterProvider } from 'react-router';
 import HomeSistion from '@/compounte/layout/pagas/Home/Home.tsx';
 
+import FreeTrialJoinForm from '@/compounte/layout/pagas/FreeTrailPagas/FreeTrailPagas.tsx';
+import ContactSection from '@/compounte/layout/pagas/contactUs.tsx';
+import AboutPagase from '@/compounte/layout/pagas/AboutPagas.tsx';
+
+
+
 
 // import { ThemeProvider } from '@/compounte/povider/them-poider.tsx';
 
@@ -31,7 +37,20 @@ const router = createBrowserRouter([
       {
         index: true,
         Component: HomeSistion
+      },
+      {
+        path: "/FreeTrailPagas",
+        Component: FreeTrialJoinForm,
+      },
+      {
+        path: "/ContactSection",
+        Component: ContactSection,
+      },
+      {
+        path: "/AboutPagase",
+        Component: AboutPagase,
       }
+
 
     ]
   },

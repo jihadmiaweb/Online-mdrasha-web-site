@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 
 function ChooseMadrasatu() {
     return (
@@ -43,12 +44,12 @@ function ChooseMadrasatu() {
                         Quran and Islamic studies institute, ensuring authentic, accredited
                         education that fits your lifestyle and learning pace.
                     </p>
-                    <a
-                        href="#"
+                    <Link
+                        to="/FreeTrailPagas"
                         className="mt-6 inline-block bg-blue-900 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all duration-300"
                     >
                         Join The Free Trial Class
-                    </a>
+                    </Link>
                 </motion.div>
             </div>
         </section>

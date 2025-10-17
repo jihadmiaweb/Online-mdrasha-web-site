@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 
 function AboutMadrasatu() {
     return (
@@ -60,12 +61,12 @@ function AboutMadrasatu() {
                         Join our <a href="#" className="text-blue-700 underline">Facebook community</a> to stay connected.
                     </p>
 
-                    <a
-                        href="#"
+                    <Link
+                        to="/FreeTrailPagas"
                         className="mt-4 inline-block bg-blue-900 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all duration-300"
                     >
                         Join The Free Trial Class
-                    </a>
+                    </Link>
                 </motion.div>
             </div>
         </section>

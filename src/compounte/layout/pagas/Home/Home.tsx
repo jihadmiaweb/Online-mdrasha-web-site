@@ -1,6 +1,7 @@
-import WhyChooseUs from "@/compounte/user/AboutNuurul";
+import WhyChooseUs from "@/compounte/user/HomePagesAllitem/AboutNuurul";
 import AboutInstitute from "@/compounte/user/HomePagesAllitem/AboutInstitute";
 import AboutMadrasatu from "@/compounte/user/HomePagesAllitem/AboutMadrasatuNuurul";
+
 import BinerSistion from "@/compounte/user/HomePagesAllitem/BinerSisTIon";
 import ChooseMadrasatu from "@/compounte/user/HomePagesAllitem/ChooseourMadrasatu";
 import ConnectMadrasatu from "@/compounte/user/HomePagesAllitem/ConnectMadrasatu";

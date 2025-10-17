@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 
 function Convenience() {
     return (
@@ -37,12 +38,12 @@ function Convenience() {
                     Whether you are a beginner or seeking advanced studies, our top Islamic
                     institute online delivers personalized, interactive lessons for all ages.
                 </p>
-                <a
-                    href="#"
+                <Link
+                    to="/FreeTrailPagas"
                     className="inline-block border-white border-1 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105"
                 >
                     Join The Free Trial Class
-                </a>
+                </Link>
             </motion.div>
 
             {/* Optional decorative floating effect */}
