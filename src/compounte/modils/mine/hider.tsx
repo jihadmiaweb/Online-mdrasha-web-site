@@ -13,7 +13,7 @@ function Hider() {
     const navItems = [
         { name: "Home", to: "/" },
         { name: "All Courses", to: "/" },
-        { name: "Pricing", to: "/" },
+        { name: "Pricing", to: "/Pricing" },
         { name: "About Us", to: "/AboutPagase" },
         { name: "Contact Us", to: "/ContactSection" },
         { name: "Blog", to: "/BologPagas" },

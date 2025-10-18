@@ -27,6 +27,11 @@ import InternationalIslamicStudies from '@/compounte/user/BologPagasAllItem/Inte
 import OnlineIslamicClassForAdults from '@/compounte/user/BologPagasAllItem/OnlineIslamicClassForAdults.tsx';
 import BengaliIslamicLearningProgram from '@/compounte/user/BologPagasAllItem/BengaliIslamicLearningProgram.tsx';
 import QuranicInstituteOnline from '@/compounte/user/BologPagasAllItem/QuranicInstituteOnline.tsx';
+import Pricing from '@/compounte/layout/pagas/pricing.tsx';
+import PrivacyPolicyAccordion from '@/compounte/layout/pagas/PrivacyPolicyAccordion.tsx';
+import TermsConditionsAccordion from '@/compounte/layout/pagas/TermsConditionsAccordion.tsx';
+import GeneralFAQ from '@/compounte/layout/pagas/GeneralInqiries.tsx';
+import InfoTabs from '@/compounte/layout/pagas/TeachersSection.tsx';
 
 
 
@@ -89,8 +94,31 @@ const router = createBrowserRouter([
         Component: QuranicInstituteOnline,
       },
 
+      // pricing
 
+      {
+        path: "/Pricing",
+        Component: Pricing,
+      },
 
+      // foter
+
+      {
+        path: "/PrivacyPolicyAccordion",
+        Component: PrivacyPolicyAccordion,
+      },
+      {
+        path: "/TermsConditionsAccordion",
+        Component: TermsConditionsAccordion,
+      },
+      {
+        path: "/GeneralFAQ",
+        Component: GeneralFAQ,
+      },
+      {
+        path: "/InfoTabs",
+        Component: InfoTabs,
+      },
     ]
   },
 ]);
