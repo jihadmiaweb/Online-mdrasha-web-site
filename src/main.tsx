@@ -33,6 +33,10 @@ import TermsConditionsAccordion from '@/compounte/layout/pagas/TermsConditionsAc
 import GeneralFAQ from '@/compounte/layout/pagas/GeneralInqiries.tsx';
 import InfoTabs from '@/compounte/layout/pagas/TeachersSection.tsx';
 import AboutUs from '@/compounte/layout/pagas/AboutUs.tsx';
+import TajweedFullPage from '@/compounte/layout/pagas/TajweedFullPage.tsx';
+import HifzCourse from '@/compounte/layout/pagas/HifzCourse.tsx';
+import Recitation from '@/compounte/layout/pagas/Recitation.tsx';
+import FiqhSection from '@/compounte/layout/pagas/FiqhSection.tsx';
 
 
 
@@ -124,6 +128,25 @@ const router = createBrowserRouter([
         path: "/AboutUs",
         Component: AboutUs,
       },
+      // About-course
+      {
+        path: "/TajweedFullPage",
+        Component: TajweedFullPage,
+      },
+      {
+        path: "/HifzCourse",
+        Component: HifzCourse,
+      },
+      {
+        path: "/Recitation",
+        Component: Recitation,
+      },
+      {
+        path: "/FiqhSection",
+        Component: FiqhSection,
+      },
+
+
     ]
   },
 ]);
