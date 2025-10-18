@@ -32,6 +32,7 @@ import PrivacyPolicyAccordion from '@/compounte/layout/pagas/PrivacyPolicyAccord
 import TermsConditionsAccordion from '@/compounte/layout/pagas/TermsConditionsAccordion.tsx';
 import GeneralFAQ from '@/compounte/layout/pagas/GeneralInqiries.tsx';
 import InfoTabs from '@/compounte/layout/pagas/TeachersSection.tsx';
+import AboutUs from '@/compounte/layout/pagas/AboutUs.tsx';
 
 
 
@@ -116,8 +117,12 @@ const router = createBrowserRouter([
         Component: GeneralFAQ,
       },
       {
-        path: "/InfoTabs",
+        path: "/handleAudioPlay",
         Component: InfoTabs,
+      },
+      {
+        path: "/AboutUs",
+        Component: AboutUs,
       },
     ]
   },

@@ -129,12 +129,12 @@ const CourseCard = ({ course }) => {
                 </p>
 
                 {/* Continue Reading Button */}
-                <Link href={course.to} className="self-start">
+                <Link to={course.to} className="self-start">
                     <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.97 }}
                         // NEW DESIGN: Vibrant pink/purple button
-                        className="mt-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-2.5 px-6 rounded-full text-sm uppercase tracking-wider shadow-lg transition-all duration-300
+                        className="mt-4 bg-gradient-to-r cursor-pointer from-pink-500 to-purple-600 text-white font-bold py-2.5 px-6 rounded-full text-sm uppercase tracking-wider shadow-lg transition-all duration-300
                             hover:from-pink-600 hover:to-purple-700"
                     >
                         CONTINUE READING
@@ -183,6 +183,7 @@ const CourseGrid = () => {
                     className="bg-purple-600 text-white font-bold py-3.5 px-10 rounded-full shadow-xl transition-all duration-300 text-lg uppercase tracking-wider
                         hover:bg-purple-700 shadow-purple-300/50"
                 >
+
                     View All Programs ({courseData.length})
                 </motion.button>
             </div>

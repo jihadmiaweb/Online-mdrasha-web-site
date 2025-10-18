@@ -1,45 +1,40 @@
-import React, { FC, useState } from "react";
-// Assuming you are using 'react-router-dom' for routing in a real application
-// If you are using plain 'react-router', adjust the import path as necessary.
-// For this example, we use a mock Link component if 'react-router-dom' isn't explicitly imported.
-// In a real project, change this line to: import { Link } from "react-router-dom";
+import React, { useState, type FC } from "react";
+
 import { Link } from 'react-router-dom';
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 
-// Fallback/Placeholder for the Link component if react-router-dom is not used, ensuring anchor tags are rendered
-// const Link = ({ to, className, children }) => <a href={to} className={className}>{children}</a>;
 
 const Footer: FC = () => {
     const [email, setEmail] = useState("");
     const [submitted, setSubmitted] = useState(false);
 
-    // Explicitly type the event for better TypeScript practice
+
     const handleSubscribe = (e: React.FormEvent) => {
         e.preventDefault();
         if (email) {
-            // In a real app, you'd send the email to your API here
+
             setSubmitted(true);
             setEmail("");
-            setTimeout(() => setSubmitted(false), 3000); // 3-second notification
+            setTimeout(() => setSubmitted(false), 3000);
         }
     };
 
     return (
         <footer className="bg-gray-900 text-white py-12 md:py-16">
             <div className="container mx-auto px-6 md:px-8 max-w-7xl">
-                {/* Main Content Grid: 2 columns on mobile/sm, 4 columns on medium/desktop */}
+
                 <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-y-10 gap-x-8">
 
-                    {/* 1. Educational Links */}
+
                     <div className="col-span-1">
                         <h3 className="font-bold text-lg mb-5 border-b-2 border-indigo-500/50 pb-2 text-indigo-400">
                             শিক্ষামূলক লিঙ্ক
                         </h3>
                         <ul className="space-y-3 text-sm text-gray-300">
-                            <li><Link to="/courses" className="hover:text-white transition duration-200">কোর্সসমূহ</Link></li>
-                            <li><Link to="/about" className="hover:text-white transition duration-200">আমাদের সম্পর্কে</Link></li>
-                            <li><Link to="/contact" className="hover:text-white transition duration-200">যোগাযোগ</Link></li>
-                            <li><Link to="/blog" className="hover:text-white transition duration-200">ব্লগ</Link></li>
+                            <li><Link to="/handleAudioPlay" className="hover:text-white transition duration-200">কোর্সসমূহ</Link></li>
+                            <li><Link to="/AboutUs" className="hover:text-white transition duration-200">আমাদের সম্পর্কে</Link></li>
+                            <li><Link to="/ContactSection" className="hover:text-white transition duration-200">যোগাযোগ</Link></li>
+                            <li><Link to="/BologPagas" className="hover:text-white transition duration-200">ব্লগ</Link></li>
                         </ul>
                     </div>
 
@@ -71,7 +66,7 @@ const Footer: FC = () => {
                             <li><Link to="/PrivacyPolicyAccordion" className="hover:text-white transition duration-200">গোপনীয়তা নীতি</Link></li>
                             <li><Link to="/TermsConditionsAccordion" className="hover:text-white transition duration-200">শর্তাবলী</Link></li>
                             <li><Link to="/GeneralFAQ" className="hover:text-white transition duration-200">সাধারণ জিজ্ঞাসা</Link></li>
-                            <li><Link to="/InfoTabs" className="hover:text-white transition duration-200">শিক্ষকগণ</Link></li>
+                            <li><Link to="/handleAudioPlay" className="hover:text-white transition duration-200">শিক্ষকগণ</Link></li>
                         </ul>
                     </div>
 
