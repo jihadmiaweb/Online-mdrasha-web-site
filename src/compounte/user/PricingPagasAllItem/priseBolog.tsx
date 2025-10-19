@@ -2,6 +2,7 @@
 import React, { FC } from 'react';
 import { motion } from 'framer-motion';
 import { Clock, DollarSign, Calendar } from 'lucide-react';
+import { Link } from 'react-router';
 
 // --- Type Definitions ---
 interface FeeRow {
@@ -159,9 +160,9 @@ const CourseFeeStructures: FC = () => (
                 <p className="text-lg text-gray-600 mb-6">
                     সমস্ত ফি <strong>TK (বাংলাদেশি টাকা)</strong>-তে <strong>মাসিক ভিত্তিতে</strong> ধার্য করা হয়েছে। ভর্তির বিবরণ বা অন্যান্য সহায়তার জন্য অনুগ্রহ করে সরাসরি ইনস্টিটিউটের সাথে যোগাযোগ করুন।
                 </p>
-                <a href="#" className="inline-block bg-green-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-green-700 transition duration-300">
+                <Link to="/FreeTrialContact" className="inline-block bg-green-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-green-700 transition duration-300">
                     ফ্রি ট্রায়ালের জন্য যোগাযোগ করুন
-                </a>
+                </Link>
             </motion.section>
         </div>
     </div>

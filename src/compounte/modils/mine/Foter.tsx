@@ -31,7 +31,7 @@ const Footer: FC = () => {
                             শিক্ষামূলক লিঙ্ক
                         </h3>
                         <ul className="space-y-3 text-sm text-gray-300">
-                            <li><Link to="/handleAudioPlay" className="hover:text-white transition duration-200">কোর্সসমূহ</Link></li>
+                            <li><Link to="/CoursesTab" className="hover:text-white transition duration-200">কোর্সসমূহ</Link></li>
                             <li><Link to="/AboutUs" className="hover:text-white transition duration-200">আমাদের সম্পর্কে</Link></li>
                             <li><Link to="/ContactSection" className="hover:text-white transition duration-200">যোগাযোগ</Link></li>
                             <li><Link to="/BologPagas" className="hover:text-white transition duration-200">ব্লগ</Link></li>

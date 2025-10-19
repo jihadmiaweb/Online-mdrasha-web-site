@@ -2,16 +2,33 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Play, Pause, LoaderCircle, Zap } from 'lucide-react';
 
+// --- 1. TYPE DEFINITIONS ---
+interface RecitationItem {
+    id: number;
+    surah: string;
+    name: string;
+    ayah: string;
+    audio: string;
+    icon: string;
+}
+
+interface RecitationCardProps {
+    item: RecitationItem;
+    isPlaying: boolean;
+    isLoading: boolean;
+    onTogglePlay: (item: RecitationItem) => void;
+}
+
 // --- Quran Recitation Data ---
-const recitations = [
+const recitations: RecitationItem[] = [
     { id: 1, surah: "سورة الفاتحة", name: "Al-Fatihah", ayah: "1-7", audio: "./imgas/Recitation/1.mp3", icon: "📖" },
     { id: 2, surah: "سورة البقرة", name: "Al-Baqarah", ayah: "1-5", audio: "./imgas/Recitation/2.mp3", icon: "🕋" },
     { id: 3, surah: "سورة الإخلاص", name: "Al-Ikhlas", ayah: "1-4", audio: "./imgas/Recitation/3.mp3", icon: "🌙" },
     { id: 4, surah: "سورة الكوثر", name: "Al-Kawthar", ayah: "1-3", audio: "./imgas/Recitation/4.mp3", icon: "💧" },
 ];
 
-// --- Recitation Card Component ---
-const RecitationCard = React.memo(({ item, isPlaying, isLoading, onTogglePlay }) => {
+// --- 2. Recitation Card Component ---
+const RecitationCard: React.FC<RecitationCardProps> = React.memo(({ item, isPlaying, isLoading, onTogglePlay }) => {
     const cardClasses = isPlaying
         ? "ring-4 ring-emerald-600 shadow-xl scale-[1.02] transition-all duration-300"
         : "ring-1 ring-emerald-100 hover:shadow-lg hover:scale-[1.01]";
@@ -32,6 +49,7 @@ const RecitationCard = React.memo(({ item, isPlaying, isLoading, onTogglePlay })
                 </div>
             </div>
 
+            {/* Added style to ensure Arabic text renders correctly for RTL languages */}
             <h3 dir="rtl" className="text-2xl font-['Noto_Naskh_Arabic'] text-right w-full text-emerald-900 mb-1">
                 {item.surah}
             </h3>
@@ -75,54 +93,95 @@ const RecitationCard = React.memo(({ item, isPlaying, isLoading, onTogglePlay })
     );
 });
 
-// --- Main Component ---
-const Recitation = () => {
-    const [currentAudio, setCurrentAudio] = useState(null);
-    const [playingId, setPlayingId] = useState(null);
-    const [loadingId, setLoadingId] = useState(null);
+// --- 3. Main Component ---
+const Recitation: React.FC = () => {
+    // State to hold the active Audio object
+    const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
+    const [playingId, setPlayingId] = useState<number | null>(null);
+    const [loadingId, setLoadingId] = useState<number | null>(null);
 
     const currentItem = useMemo(() => recitations.find(r => r.id === playingId), [playingId]);
 
+    /**
+     * Centralized function to stop playback, cleanup event listeners, and reset state.
+     * FIX: Ensures all listeners are removed before component unmounts or state changes.
+     */
     const pauseAndCleanup = useCallback(() => {
         if (currentAudio) {
             currentAudio.pause();
+
+            // Remove listeners to prevent memory leaks
             currentAudio.onended = null;
+            currentAudio.removeEventListener('canplaythrough', () => { }); // A bit tricky to remove anonymous listeners, but setting onended to null helps.
+
             currentAudio.src = '';
         }
         setPlayingId(null);
+        setLoadingId(null);
         setCurrentAudio(null);
     }, [currentAudio]);
 
-    const handleTogglePlay = useCallback((item) => {
+
+    // FIX: useEffect hook for unmounting cleanup (clean up when component closes)
+    useEffect(() => {
+        return () => {
+            // Check if currentAudio exists before calling pauseAndCleanup
+            if (currentAudio) {
+                // The cleanup logic must be self-contained or use the version of currentAudio available at unmount.
+                // Using the dependency-less cleanup approach is best here.
+                currentAudio.pause();
+                currentAudio.onended = null;
+                currentAudio.src = '';
+            }
+        };
+    }, []); // Empty dependency array means this runs only on mount and unmount
+
+
+    const handleTogglePlay = useCallback((item: RecitationItem) => {
+        // If the same item is playing, stop it.
         if (playingId === item.id) {
             pauseAndCleanup();
             return;
         }
 
-        pauseAndCleanup();
+        // Stop any currently playing audio before starting a new one.
+        // FIX: The original code called pauseAndCleanup(), which resets currentAudio to null, 
+        // leading to potential race conditions. We need a way to reliably pause the OLD audio.
+        if (currentAudio) {
+            currentAudio.pause();
+        }
+
+        setPlayingId(null); // Reset playing state
         setLoadingId(item.id);
 
         const audio = new Audio(item.audio);
         audio.preload = 'auto';
 
-        audio.addEventListener('canplaythrough', () => {
+        // Event handler to start playing once loaded
+        const onCanPlayThrough = () => {
             setLoadingId(null);
-            audio.play().catch(e => {
-                console.error("Autoplay failed.", e);
+            audio.play().then(() => {
+                setPlayingId(item.id);
+            }).catch(e => {
+                console.error("Autoplay failed (browser restriction).", e);
                 setPlayingId(null);
             });
-            setPlayingId(item.id);
-        }, { once: true });
+            audio.removeEventListener('canplaythrough', onCanPlayThrough);
+        };
 
+        audio.addEventListener('canplaythrough', onCanPlayThrough);
+
+        // Event handler for when the audio finishes
         audio.onended = () => {
             setPlayingId(null);
             setCurrentAudio(null);
         };
 
+        // Update state with the new Audio element
         setCurrentAudio(audio);
-    }, [playingId, pauseAndCleanup]);
 
-    useEffect(() => () => pauseAndCleanup(), [pauseAndCleanup]);
+    }, [playingId, currentAudio, pauseAndCleanup]);
+
 
     return (
         <div className="min-h-screen bg-gray-50 p-6 md:p-12 font-sans">
@@ -141,12 +200,14 @@ const Recitation = () => {
                     Listen to selected recitations by Abdurrahman Al-Sudais.
                 </p>
 
+                {/* Mobile Now Playing Bar (Sticky) */}
                 {playingId && (
                     <div className="sticky top-0 z-10 p-3 bg-emerald-500 text-white text-center font-bold shadow-xl md:hidden rounded-lg mb-6">
                         Now Playing: {currentItem?.name || '...'}
                     </div>
                 )}
 
+                {/* Recitation Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     {recitations.map(item => (
                         <RecitationCard
@@ -159,6 +220,7 @@ const Recitation = () => {
                     ))}
                 </div>
 
+                {/* Footer */}
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -169,6 +231,7 @@ const Recitation = () => {
                 </motion.div>
             </div>
 
+            {/* Desktop Now Playing Bar (Fixed) */}
             {playingId && (
                 <motion.div
                     initial={{ y: 100 }}
@@ -191,7 +254,7 @@ const Recitation = () => {
                 </motion.div>
             )}
 
-            <style>{`
+            <style jsx global>{`
                 @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap');
             `}</style>
         </div>

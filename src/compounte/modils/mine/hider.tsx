@@ -12,7 +12,7 @@ function Hider() {
     // Desktop and mobile menu items
     const navItems = [
         { name: "Home", to: "/" },
-        { name: "All Courses", to: "/" },
+        { name: "All Courses", to: "/AllCourse" },
         { name: "Pricing", to: "/Pricing" },
         { name: "About Us", to: "/AboutPagase" },
         { name: "Contact Us", to: "/ContactSection" },

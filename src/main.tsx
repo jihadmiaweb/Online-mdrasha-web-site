@@ -31,12 +31,28 @@ import Pricing from '@/compounte/layout/pagas/pricing.tsx';
 import PrivacyPolicyAccordion from '@/compounte/layout/pagas/PrivacyPolicyAccordion.tsx';
 import TermsConditionsAccordion from '@/compounte/layout/pagas/TermsConditionsAccordion.tsx';
 import GeneralFAQ from '@/compounte/layout/pagas/GeneralInqiries.tsx';
-import InfoTabs from '@/compounte/layout/pagas/TeachersSection.tsx';
 import AboutUs from '@/compounte/layout/pagas/AboutUs.tsx';
 import TajweedFullPage from '@/compounte/layout/pagas/TajweedFullPage.tsx';
 import HifzCourse from '@/compounte/layout/pagas/HifzCourse.tsx';
 import Recitation from '@/compounte/layout/pagas/Recitation.tsx';
 import FiqhSection from '@/compounte/layout/pagas/FiqhSection.tsx';
+import CoursesTab from '@/compounte/layout/pagas/CoursesTab.tsx';
+import TeachersTab from '@/compounte/layout/pagas/TeachersSection.tsx';
+import NamazGuide from '@/compounte/layout/pagas/NamazGuide.tsx';
+import RozaGuide from '@/compounte/layout/pagas/RozaGuide.tsx';
+import ZakatAndDonation from '@/compounte/layout/pagas/ZakatAndDonation.tsx';
+import HalalHaramGuide from '@/compounte/layout/pagas/HalalHaramGuide.tsx';
+import IslamicEthics from '@/compounte/layout/pagas/IslamicEthics.tsx';
+import FreeTrialContact from '@/compounte/layout/pagas/FreeTrialContac.tsx';
+import AllCourse from '@/compounte/layout/pagas/AllCourse.tsx';
+import AsmaulHusnaCourse from '@/compounte/layout/pagas/AllCourseGridBolog/AsmaulHusnaCourse.tsx';
+import PerfectSalahCourse from '@/compounte/layout/pagas/AllCourseGridBolog/PerfectSalahCourse.tsx';
+import TajweedQuranCourse from '@/compounte/layout/pagas/AllCourseGridBolog/TajweedQuranCourse.tsx';
+import NooraniQaidaCourse from '@/compounte/layout/pagas/AllCourseGridBolog/NooringQuranCours.tsx';
+import ArabicGrammarCourse from '@/compounte/layout/pagas/AllCourseGridBolog/ArabicGrammarCourse.tsx';
+import CompleteQuranHifz from '@/compounte/layout/pagas/AllCourseGridBolog/CompleteQuranHifz.tsx';
+import SeerahCourse from '@/compounte/layout/pagas/AllCourseGridBolog/SeerahCourse.tsx';
+import FiqhCourse from '@/compounte/layout/pagas/AllCourseGridBolog/FiqhCourse.tsx';
 
 
 
@@ -70,6 +86,10 @@ const router = createBrowserRouter([
       {
         path: "/AboutPagase",
         Component: AboutPagase,
+      },
+      {
+        path: "/AllCourse",
+        Component: AllCourse,
       },
       // Bolog
       {
@@ -122,7 +142,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/handleAudioPlay",
-        Component: InfoTabs,
+        Component: TeachersTab,
       },
       {
         path: "/AboutUs",
@@ -145,7 +165,73 @@ const router = createBrowserRouter([
         path: "/FiqhSection",
         Component: FiqhSection,
       },
+      {
+        path: "/CoursesTab",
+        Component: CoursesTab,
+      },
+      //  FiqhSection
 
+      {
+        path: "/NamazGuide",
+        Component: NamazGuide,
+      },
+
+      {
+        path: "/RozaGuide",
+        Component: RozaGuide,
+      },
+      {
+        path: "/ZakatAndDonation",
+        Component: ZakatAndDonation,
+      },
+      {
+        path: "/HalalHaramGuide",
+        Component: HalalHaramGuide,
+      },
+      {
+        path: "/IslamicEthics",
+        Component: IslamicEthics,
+      },
+      {
+        path: "/FreeTrialContact",
+        Component: FreeTrialContact,
+      },
+
+      // All Course bolog
+
+      {
+        path: "/AsmaulHusnaCourse",
+        Component: AsmaulHusnaCourse,
+      },
+      {
+        path: "/PerfectSalahCourse",
+        Component: PerfectSalahCourse,
+      },
+      {
+        path: "/TajweedQuranCourse",
+        Component: TajweedQuranCourse,
+      },
+      {
+        path: "/NooraniQaidaCourse",
+        Component: NooraniQaidaCourse,
+      },
+      {
+        path: "/ArabicGrammarCourse",
+        Component: ArabicGrammarCourse,
+      },
+      {
+        path: "/CompleteQuranHifz",
+        Component: CompleteQuranHifz,
+      },
+      {
+        path: "/SeerahCourse",
+        Component: SeerahCourse,
+      },
+
+      {
+        path: "/FiqhCourse",
+        Component: FiqhCourse,
+      },
 
     ]
   },
