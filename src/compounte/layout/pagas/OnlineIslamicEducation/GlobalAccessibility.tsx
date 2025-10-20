@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Globe, BookOpen, UserCheck, Eye, ArrowRight, Mail, Phone } from "lucide-react";
+import { Globe, BookOpen, UserCheck, Eye, ArrowRight, } from "lucide-react";
+import { Link } from "react-router";
 
 const islamicTopics = [
     {
         id: 1,
+        to: "/QuranTajweedCourse",
         title: "কোরআন শিক্ষা ও তাজবীদ",
         description:
             "কোরআন সঠিকভাবে পড়া, উচ্চারণ এবং তাফসীর শেখার জন্য সহজ এবং অন্তর্ভুক্তিমূলক কোর্স।",
@@ -13,14 +15,16 @@ const islamicTopics = [
     },
     {
         id: 2,
+        to: "/SirahHistory",
         title: "সীরাহ এবং ইতিহাস",
         description:
             "নবী মুহাম্মদ (সাঃ)-এর জীবনী, শিক্ষা ও ইসলামের ঐতিহাসিক ঘটনাগুলির বিস্তারিত অধ্যয়ন।",
         icon: Globe,
-        cta: "সীরাহ পড়ুন",
+        cta: "সীরাহ পড়ুন",
     },
     {
         id: 3,
+        to: "/NamazFiqh",
         title: "নামাজ ও ফিকাহ নির্দেশিকা",
         description:
             "সবার জন্য নামাজের সহজ ও পরিষ্কার নির্দেশিকা, শারীরিক সীমাবদ্ধতা সহ সকলের জন্য বিশেষ ফিকাহ আলোচনা।",
@@ -29,6 +33,7 @@ const islamicTopics = [
     },
     {
         id: 4,
+        to: "",
         title: "ইসলামিক নৈতিকতা ও আচরণ",
         description:
             "দৈনন্দিন জীবনে অনুসরণ করার জন্য ইসলামিক নীতি, আদব এবং সামাজিক আচরণের সহজবোধ্য শিক্ষা।",
@@ -69,10 +74,11 @@ const TopicCard = ({ topic }) => {
                 <p className="text-gray-600 text-base mb-6">{topic.description}</p>
             </div>
 
-            <a href="#" className="flex items-center text-emerald-600 font-semibold text-sm group">
+            {/* FIX APPLIED HERE: Using topic.to instead of islamicTopics.to */}
+            <Link to={topic.to} className="flex items-center text-emerald-600 font-semibold text-sm group">
                 {topic.cta || "আরো জানুন"}
                 <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-            </a>
+            </Link>
         </motion.div>
     );
 };
@@ -111,7 +117,7 @@ export default function IslamicAccessibility() {
                         transition={{ duration: 0.8, delay: 0.1 }}
                         className="text-lg sm:text-xl text-gray-500 max-w-3xl mx-auto"
                     >
-                        আমরা এমন একটি প্ল্যাটফর্ম তৈরি করতে চাই যা কোনো বাধা ছাড়াই জ্ঞান অর্জনে সাহায্য করবে।
+                        আমরা এমন একটি প্ল্যাটফর্ম তৈরি করতে চাই যা কোনো বাধা ছাড়াই জ্ঞান অর্জনে সাহায্য করবে।
                     </motion.p>
                 </div>
 

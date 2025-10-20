@@ -16,7 +16,6 @@ import './index.css'
 
 import { RouterProvider } from 'react-router';
 import HomeSistion from '@/compounte/layout/pagas/Home/Home.tsx';
-
 import FreeTrialJoinForm from '@/compounte/layout/pagas/FreeTrailPagas/FreeTrailPagas.tsx';
 import ContactSection from '@/compounte/layout/pagas/contactUs.tsx';
 import AboutPagase from '@/compounte/layout/pagas/AboutPagas.tsx';
@@ -59,6 +58,8 @@ import AffordableCourses from '@/compounte/layout/pagas/OnlineIslamicEducation/A
 import InteractiveQuranSessions from '@/compounte/layout/pagas/OnlineIslamicEducation/InteractiveQuranSessions.tsx';
 import IslamicAccessibility from '@/compounte/layout/pagas/OnlineIslamicEducation/GlobalAccessibility.tsx';
 import AuthenticEducation from '@/compounte/layout/pagas/OnlineIslamicEducation/AuthenticEducation.tsx';
+import QuranTajweedCourse from '@/compounte/layout/pagas/IslamicEducationCourse/QuranTajweedCourse.tsx';
+import SirahHistory from '@/compounte/layout/pagas/IslamicEducationCourse/SirahHistory.tsx';
 
 
 
@@ -264,6 +265,17 @@ const router = createBrowserRouter([
         path: "/AuthenticEducation",
         Component: AuthenticEducation,
       },
+
+      {
+        path: "/QuranTajweedCourse",
+        Component: QuranTajweedCourse,
+      },
+      {
+        path: "/SirahHistory",
+        Component: SirahHistory,
+      },
+
+
 
     ]
   },
