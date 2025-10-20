@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaBookOpen, FaGraduationCap, FaCheckCircle } from "react-icons/fa";
+import { Link } from "react-router";
 
 function AboutInstitute() {
     const [formData, setFormData] = useState({
@@ -232,19 +233,51 @@ function AboutInstitute() {
                         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
                     >
                         {[
-                            "Qualified Islamic Scholars",
-                            "Flexible Class Timings",
-                            "Affordable Online Courses",
-                            "Interactive Quran Sessions",
-                            "Global Accessibility",
-                            "Authentic & Accredited Education",
+                            {
+                                id: 1,
+                                to: "/QualifiedScholars",
+                                title: "Qualified Islamic Scholars",
+                            },
+                            {
+                                id: 1,
+                                to: "/FlexibleClassTimings",
+                                title: "Flexible Class Timings",
+                            },
+                            {
+                                id: 1,
+                                to: "/AffordableCourses",
+                                title: "Affordable Online Courses",
+                            },
+                            {
+                                id: 1,
+                                to: "/InteractiveQuranSessions",
+                                title: "Interactive Quran Sessions",
+                            },
+                            {
+                                id: 1,
+                                to: "/IslamicAccessibility",
+                                title: "Global Accessibility",
+                            },
+                            {
+                                id: 1,
+                                to: "/AuthenticEducation",
+                                title: "Authentic & Accredited Education",
+                            }
+
+
+
+
+
+
                         ].map((item, i) => (
                             <div
                                 key={i}
                                 className="flex items-center gap-3 bg-white rounded-xl shadow-md p-5 hover:shadow-lg transition text-left" // Explicit text-left for multi-line items
                             >
                                 <FaCheckCircle className="text-green-500 text-xl flex-shrink-0" />
-                                <span className="text-gray-800 font-semibold">{item}</span>
+                                <Link to={item.to}>
+                                    <span className="text-gray-800 font-semibold">{item.title}</span>
+                                </Link>
                             </div>
                         ))}
                     </motion.div>

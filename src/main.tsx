@@ -53,6 +53,12 @@ import ArabicGrammarCourse from '@/compounte/layout/pagas/AllCourseGridBolog/Ara
 import CompleteQuranHifz from '@/compounte/layout/pagas/AllCourseGridBolog/CompleteQuranHifz.tsx';
 import SeerahCourse from '@/compounte/layout/pagas/AllCourseGridBolog/SeerahCourse.tsx';
 import FiqhCourse from '@/compounte/layout/pagas/AllCourseGridBolog/FiqhCourse.tsx';
+import QualifiedScholars from '@/compounte/layout/pagas/OnlineIslamicEducation/QualifiedScholars.tsx';
+import FlexibleClassTimings from '@/compounte/layout/pagas/OnlineIslamicEducation/FlexibleClassTimings.tsx';
+import AffordableCourses from '@/compounte/layout/pagas/OnlineIslamicEducation/AffordableCourses.tsx';
+import InteractiveQuranSessions from '@/compounte/layout/pagas/OnlineIslamicEducation/InteractiveQuranSessions.tsx';
+import IslamicAccessibility from '@/compounte/layout/pagas/OnlineIslamicEducation/GlobalAccessibility.tsx';
+import AuthenticEducation from '@/compounte/layout/pagas/OnlineIslamicEducation/AuthenticEducation.tsx';
 
 
 
@@ -231,6 +237,32 @@ const router = createBrowserRouter([
       {
         path: "/FiqhCourse",
         Component: FiqhCourse,
+      },
+      // Online Islamic Education routwr
+
+      {
+        path: "/QualifiedScholars",
+        Component: QualifiedScholars,
+      },
+      {
+        path: "/FlexibleClassTimings",
+        Component: FlexibleClassTimings,
+      },
+      {
+        path: "/AffordableCourses",
+        Component: AffordableCourses,
+      },
+      {
+        path: "/InteractiveQuranSessions",
+        Component: InteractiveQuranSessions,
+      },
+      {
+        path: "/IslamicAccessibility",
+        Component: IslamicAccessibility,
+      },
+      {
+        path: "/AuthenticEducation",
+        Component: AuthenticEducation,
       },
 
     ]
