@@ -24,7 +24,7 @@ const islamicTopics = [
     },
     {
         id: 3,
-        to: "/NamazFiqh",
+        to: "/NamazFiqhGuide",
         title: "নামাজ ও ফিকাহ নির্দেশিকা",
         description:
             "সবার জন্য নামাজের সহজ ও পরিষ্কার নির্দেশিকা, শারীরিক সীমাবদ্ধতা সহ সকলের জন্য বিশেষ ফিকাহ আলোচনা।",
@@ -33,7 +33,7 @@ const islamicTopics = [
     },
     {
         id: 4,
-        to: "",
+        to: "/IslamicEthicsBehavior",
         title: "ইসলামিক নৈতিকতা ও আচরণ",
         description:
             "দৈনন্দিন জীবনে অনুসরণ করার জন্য ইসলামিক নীতি, আদব এবং সামাজিক আচরণের সহজবোধ্য শিক্ষা।",

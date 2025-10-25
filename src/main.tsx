@@ -60,6 +60,9 @@ import IslamicAccessibility from '@/compounte/layout/pagas/OnlineIslamicEducatio
 import AuthenticEducation from '@/compounte/layout/pagas/OnlineIslamicEducation/AuthenticEducation.tsx';
 import QuranTajweedCourse from '@/compounte/layout/pagas/IslamicEducationCourse/QuranTajweedCourse.tsx';
 import SirahHistory from '@/compounte/layout/pagas/IslamicEducationCourse/SirahHistory.tsx';
+import NamazFiqhGuide from '@/compounte/layout/pagas/IslamicEducationCourse/NamazFiqh.tsx';
+import IslamicEthicsBehavior from '@/compounte/layout/pagas/IslamicEducationCourse/IslamicEthicsBehavior.tsx';
+import CourseEnrollment from '@/compounte/auth/CourseEnrollment.tsx';
 
 
 
@@ -273,6 +276,19 @@ const router = createBrowserRouter([
       {
         path: "/SirahHistory",
         Component: SirahHistory,
+      },
+      {
+        path: "/NamazFiqhGuide",
+        Component: NamazFiqhGuide,
+      },
+      {
+        path: "/IslamicEthicsBehavior",
+        Component: IslamicEthicsBehavior,
+      },
+
+      {
+        path: "/CourseEnrollment",
+        Component: CourseEnrollment,
       },
 
 

@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BookOpen, Users, Clock, Search, ArrowRight, ChevronDown, Globe } from "lucide-react";
+import { Link } from "react-router";
 
 // --- ডেটা সোর্স (Data Source) ---
 const instructors = [
-    { id: 1, name: "ড. মোহাম্মদ রাশিদ", title: "ইসলামিক ইতিহাসবিজ্ঞানী", bio: "বিশ্লেষণাত্মক সীরাহ ও ইসলামী ইতিহাসে গবেষক; ১৫ বছরের শিক্ষাদান অভিজ্ঞতা।", photo: "/imgas/scholars/rashid.jpg" },
-    { id: 2, name: "প্রফ. সাবিনা পারভীন", title: "তথ্যভিত্তিক বায়োগ্রাফি শিক্ষক", bio: "নবীর জীবনী ও সামাজিক প্রেক্ষাপটে দক্ষ; বিভিন্ন আন্তর্জাতিক জার্নালে প্রকাশনা আছে।", photo: "/imgas/scholars/sabina.jpg" },
+    {
+        id: 1, name: "ড. মোহাম্মদ রাশিদ", title: "ইসলামিক ইতিহাসবিজ্ঞানী",
+        bio: "বিশ্লেষণাত্মক সীরাহ ও ইসলামী ইতিহাসে গবেষক; ১৫ বছরের শিক্ষাদান অভিজ্ঞতা।",
+        photo: "/imgas/Qualified-Islamic-Scholars/download(3).jpeg"
+    },
+    { id: 2, name: "প্রফ. সাবিনা পারভীন", title: "তথ্যভিত্তিক বায়োগ্রাফি শিক্ষক", bio: "নবীর জীবনী ও সামাজিক প্রেক্ষাপটে দক্ষ; বিভিন্ন আন্তর্জাতিক জার্নালে প্রকাশনা আছে।", photo: "/imgas/Qualified-Islamic-Scholars/download (1).jpeg" },
 ];
 
 const curriculum = [
@@ -177,7 +182,10 @@ export default function SirahHistory({ className = "" }) {
                             whileTap={{ scale: 0.98 }}
                             className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-xl font-bold text-lg shadow-xl hover:bg-indigo-700 transition-all duration-300"
                         >
-                            কোর্সে ভর্তি হন <ArrowRight size={20} />
+                            <Link to={"/CourseEnrollment"}>
+                                কোর্সে ভর্তি হন
+                            </Link>
+                            <ArrowRight size={20} />
                         </motion.button>
 
                         {/* রিসোর্স ও পাঠ্যপুস্তক */}

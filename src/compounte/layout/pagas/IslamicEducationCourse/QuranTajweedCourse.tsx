@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, BookOpen, User, Speaker, CheckSquare, ArrowRight, ChevronDown } from "lucide-react";
+import { Link } from "react-router";
 
 // --- ডেটা সোর্স (Data Source) ---
 const sampleTeachers = [
@@ -204,7 +205,10 @@ export default function QuranTajweedCourse({ className = "" }) {
 
                         <div className="w-full sm:w-auto flex-shrink-0">
                             <button className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-xl font-semibold shadow-xl hover:bg-indigo-700 transition-all duration-300">
-                                কোর্সে ভর্তি করুন <ArrowRight size={18} />
+                                <Link to={"/CourseEnrollment"}>
+                                    কোর্সে ভর্তি করুন
+                                </Link>
+                                <ArrowRight size={18} />
                             </button>
                         </div>
                     </div>
