@@ -7,9 +7,8 @@ import { Button } from "@/components/ui/button";
 
 function Hider() {
     const [open, setOpen] = useState(false);
-    const [searchOpen, setSearchOpen] = useState(false); // ✅ Search popup state
+    const [searchOpen, setSearchOpen] = useState(false);
 
-    // Desktop and mobile menu items
     const navItems = [
         { name: "Home", to: "/" },
         { name: "All Courses", to: "/AllCourse" },
@@ -20,9 +19,9 @@ function Hider() {
     ];
 
     return (
-        <nav>
-            {/* Navbar */}
-            <div className="bg-teal-50 flex justify-between items-center fixed top-0 left-0 w-full shadow-md px-6 md:px-12 z-50 h-16">
+        <nav className="relative">
+            {/* Navbar with Gradient */}
+            <div className="bg-gradient-to-r from-teal-200 via-indigo-200 to-pink-200 flex justify-between items-center fixed top-0 left-0 w-full shadow-md px-6 md:px-12 z-50 h-16">
                 {/* Logo */}
                 <div className="w-[150px]">
                     <img src="/imgas/1.png" alt="Logo" className="h-12 object-contain" />
@@ -72,14 +71,13 @@ function Hider() {
                 </div>
             </div>
 
-            {/* Mobile Menu */}
+            {/* Mobile Menu with Gradient */}
             <div
-                className={`md:hidden bg-teal-50 w-full fixed top-16 left-0 shadow-md z-40 transform transition-transform duration-300 ${open ? "translate-y-0" : "-translate-y-full"
+                className={`md:hidden bg-gradient-to-b from-teal-200 via-indigo-200 to-pink-200 w-full fixed top-16 left-0 shadow-md z-40 transform transition-transform duration-300 ${open ? "translate-y-0" : "-translate-y-full"
                     }`}
             >
                 <div className="flex flex-col gap-4 font-bold px-6 py-6">
                     {navItems.map((item) => (
-
                         <NavLink
                             key={item.to}
                             to={item.to}
@@ -96,14 +94,12 @@ function Hider() {
             {searchOpen && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
                     <div className="bg-white rounded-lg w-11/12 max-w-md p-6 relative">
-
                         <button
                             className="absolute top-3 right-3 text-gray-600 hover:text-gray-900"
                             onClick={() => setSearchOpen(false)}
                         >
                             <X size={24} />
                         </button>
-
                         <h2 className="text-lg font-semibold mb-4">Search</h2>
                         <input
                             type="text"
@@ -117,8 +113,8 @@ function Hider() {
                 </div>
             )}
 
-            {/* Page content */}
-            <div className="pt-20">
+            {/* Page content with full-page Gradient */}
+            <div className="pt-16 min-h-screen bg-gradient-to-b from-blue-100 via-purple-100 to-pink-100">
                 <Outlet />
             </div>
         </nav>
