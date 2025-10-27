@@ -12,17 +12,24 @@ function AboutInstitute() {
         facebook: "",
     });
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    ) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // Basic Client-side validation for required fields
+
         if (!formData.name || !formData.gender || !formData.whatsapp || !formData.country) {
             alert("Please fill out all required fields.");
             return;
         }
+
+        // যদি সব ঠিক থাকে → সাবমিট লজিক
+
+
 
         console.log("Form submitted:", formData);
         alert("✅ Thank you for joining! We’ll contact you soon on WhatsApp.");

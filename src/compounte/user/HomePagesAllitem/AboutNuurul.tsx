@@ -1,6 +1,6 @@
 import React from "react";
 import { FaRegLightbulb, FaBookOpen, FaHandsHelping, FaDollarSign, FaClock, FaShieldAlt } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 
 const features = [
     { id: "01", icon: <FaRegLightbulb />, title: "1-Day Free Trial Class", description: "Start with a 1-day Free Trial Class and Discover the Difference with Us!" },
@@ -12,14 +12,18 @@ const features = [
 ];
 
 // Animation Variants for Cards
-const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: (i) => ({
+
+
+const sectionVariants: Variants = {
+    hidden: { opacity: 0, y: 50, scale: 0.9 },
+    visible: {
         opacity: 1,
         y: 0,
-        transition: { delay: i * 0.2, duration: 0.6, ease: "easeOut" },
-    }),
+        scale: 1,
+        transition: { duration: 0.5, ease: "easeOut" },
+    },
 };
+
 
 const WhyChooseUs = () => {
     return (
@@ -40,7 +44,7 @@ const WhyChooseUs = () => {
                             initial="hidden"
                             whileInView="visible"
                             viewport={{ once: true, amount: 0.3 }}
-                            variants={cardVariants}
+                            variants={sectionVariants}
                             className="bg-white rounded-2xl shadow-xl p-8 border border-gray-200
                          group transform transition-all duration-500 hover:-translate-y-2 hover:scale-105
                          hover:shadow-2xl hover:shadow-green-400/40 hover:border-green-500 cursor-pointer overflow-hidden"

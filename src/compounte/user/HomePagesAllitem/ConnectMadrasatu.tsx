@@ -52,7 +52,7 @@ function ConnectMadrasatu() {
                         </div>
                         <div className="mb-4">
                             <label htmlFor="message" className="block text-gray-700 font-medium mb-1">Your Message</label>
-                            <textarea id="message" placeholder="Type your message..." rows="5" className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
+                            <textarea id="message" placeholder="Type your message..." className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
                         </div>
                         <button type="submit" className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all duration-300">
                             Send Message

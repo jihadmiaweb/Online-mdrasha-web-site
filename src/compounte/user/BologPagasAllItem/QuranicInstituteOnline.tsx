@@ -1,8 +1,9 @@
 "use client";
-import React, { useState, ChangeEvent, FormEvent, FC } from 'react';
-import { motion } from 'framer-motion';
-import { FaGraduationCap, FaClock, FaDollarSign, FaQuran, FaCheckCircle, FaUserGraduate, FaHeadset, FaEnvelope, FaBookReader, FaLanguage, FaGlobe, FaCertificate } from 'react-icons/fa';
-import { BookOpen, Calendar, Users, Zap, Star } from 'lucide-react';
+import React, { useState, type ChangeEvent, type FC, type FormEvent, } from 'react';
+
+import { motion, type Variants, } from 'framer-motion';
+import { FaClock, FaDollarSign, FaQuran, FaCheckCircle, FaUserGraduate, FaHeadset, FaEnvelope, FaBookReader, FaLanguage, FaGlobe, FaCertificate } from 'react-icons/fa';
+import { Star } from 'lucide-react';
 
 // --- Type Definitions for Data and State ---
 interface Feature {
@@ -51,22 +52,25 @@ const testimonials = [
 
 
 // --- Framer Motion Variants ---
-const sectionVariants = {
+const sectionVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
         opacity: 1,
         y: 0,
-        transition: { duration: 0.7, ease: "easeOut" }
-    }
+        transition: { duration: 0.7, ease: "easeOut" },
+    },
 };
 
-const cardVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: (i: number) => ({
+
+
+const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 50, scale: 0.9 },
+    visible: {
         opacity: 1,
+        y: 0,
         scale: 1,
-        transition: { delay: i * 0.1, duration: 0.5 }
-    })
+        transition: { duration: 0.5, ease: "easeOut" },
+    },
 };
 
 // --- Main Component (Typed & Responsive) ---

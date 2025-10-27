@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, type ChangeEvent, type FC, type FormEvent } from "react";
-import { motion, Variants, Transition } from "framer-motion";
-import { FaClock, FaUserGraduate, FaHeadset, FaEnvelope, FaLanguage, FaCommentDots } from "react-icons/fa";
+import { motion, type Transition, type Variants, } from "framer-motion";
+import { FaUserGraduate, FaHeadset, FaEnvelope, FaLanguage, FaCommentDots } from "react-icons/fa";
 import { ChevronDown, ChevronUp, Users, MessageSquare, Clock } from "lucide-react";
 
 // --- Type Definitions ---

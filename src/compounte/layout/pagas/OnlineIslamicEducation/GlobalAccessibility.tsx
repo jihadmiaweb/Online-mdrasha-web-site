@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { motion, type Variants, } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { Globe, BookOpen, UserCheck, Eye, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 // === TypeScript Types ===
 type IslamicTopic = {
@@ -18,66 +19,75 @@ type FormData = {
     phone: string;
 };
 
-// === Authentic & Accredited Education Data ===
+// === Islamic Topics Data ===
 const islamicTopics: IslamicTopic[] = [
     {
         id: 1,
-        to: "#QuranTajweedCourse", // Modified 'to' for anchor tag
+        to: "/QuranTajweedCourse",
         title: "কোরআন শিক্ষা ও তাজবীদ",
         description:
-            "কোরআন সঠিকভাবে পড়া, উচ্চারণ এবং তাফসীর শেখার জন্য সহজ এবং অন্তর্ভুক্তিমূলক কোর্স।",
+            "কোরআন সঠিকভাবে পড়া, উচ্চারণ এবং তাফসীর শেখার জন্য সহজ ও অন্তর্ভুক্তিমূলক কোর্স।",
         icon: BookOpen,
         cta: "কোর্স শুরু করুন",
     },
     {
         id: 2,
-        to: "#SirahHistory", // Modified 'to' for anchor tag
-        title: "সীরাহ এবং ইতিহাস",
+        to: "/SirahHistory",
+        title: "সীরাহ ও ইসলামী ইতিহাস",
         description:
-            "নবী মুহাম্মদ (সাঃ)-এর জীবনী, শিক্ষা ও ইসলামের ঐতিহাসিক ঘটনাগুলির বিস্তারিত অধ্যয়ন।",
+            "নবী মুহাম্মদ (সাঃ)-এর জীবনী, শিক্ষা ও ইসলামের ইতিহাসের গুরুত্বপূর্ণ অধ্যয়ন।",
         icon: Globe,
         cta: "সীরাহ পড়ুন",
     },
     {
         id: 3,
-        to: "#NamazFiqhGuide", // Modified 'to' for anchor tag
+        to: "/NamazFiqhGuide",
         title: "নামাজ ও ফিকাহ নির্দেশিকা",
         description:
-            "সবার জন্য নামাজের সহজ ও পরিষ্কার নির্দেশিকা, শারীরিক সীমাবদ্ধতা সহ সকলের জন্য বিশেষ ফিকাহ আলোচনা।",
+            "সবার জন্য নামাজের সহজ নির্দেশিকা এবং বিভিন্ন পরিস্থিতিতে ফিকাহ ব্যাখ্যা।",
         icon: UserCheck,
         cta: "নির্দেশিকা দেখুন",
     },
     {
         id: 4,
-        to: "#IslamicEthicsBehavior", // Modified 'to' for anchor tag
+        to: "/IslamicEthicsBehavior",
         title: "ইসলামিক নৈতিকতা ও আচরণ",
         description:
-            "দৈনন্দিন জীবনে অনুসরণ করার জন্য ইসলামিক নীতি, আদব এবং সামাজিক আচরণের সহজবোধ্য শিক্ষা।",
+            "দৈনন্দিন জীবনে অনুসরণযোগ্য ইসলামিক নীতি, আদব ও সামাজিক আচরণের শিক্ষা।",
         icon: Eye,
         cta: "বিস্তারিত জানুন",
     },
 ];
 
-// Motion variants
+// === Framer Motion Variants ===
 const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
 };
 
 const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 50, scale: 0.95 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 120, damping: 18 } },
+    hidden: { opacity: 0, y: 40, scale: 0.96 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: { type: "spring", stiffness: 120, damping: 18 },
+    },
 };
 
-// Type added to props
+// === Topic Card ===
 const TopicCard = ({ topic }: { topic: IslamicTopic }) => {
     const Icon = topic.icon;
     return (
         <motion.div
             variants={itemVariants}
-            whileHover={{ y: -8, scale: 1.03, boxShadow: "0 25px 45px -15px rgba(16,185,129,0.3)" }}
+            whileHover={{
+                y: -8,
+                scale: 1.03,
+                boxShadow: "0 25px 45px -15px rgba(16,185,129,0.3)",
+            }}
             transition={{ type: "spring", stiffness: 300, damping: 15 }}
-            className="bg-white/90 backdrop-blur-md rounded-3xl p-7 shadow-lg border border-emerald-100 cursor-pointer flex flex-col justify-between hover:scale-[1.02] transition-all duration-300"
+            className="bg-white/90 backdrop-blur-md rounded-3xl p-7 shadow-lg border border-emerald-100 flex flex-col justify-between hover:scale-[1.02] transition-all duration-300"
         >
             <div>
                 <motion.div
@@ -87,44 +97,57 @@ const TopicCard = ({ topic }: { topic: IslamicTopic }) => {
                 >
                     <Icon className="w-7 h-7" />
                 </motion.div>
-                <h3 className="text-2xl font-bold mb-3 text-gray-900 leading-snug">{topic.title}</h3>
+                <h3 className="text-2xl font-bold mb-3 text-gray-900 leading-snug">
+                    {topic.title}
+                </h3>
                 <p className="text-gray-600 text-base mb-6">{topic.description}</p>
             </div>
 
-            {/* Replaced 'Link' with 'a' tag for a self-contained component */}
-            <a
-                href={topic.to}
+            <Link
+                to={topic.to}
                 className="flex items-center text-emerald-600 font-semibold text-sm group"
-                // This prevents navigation in the sandbox, use topic.to as the href
-                onClick={(e) => { e.preventDefault(); console.log(`Navigating to: ${topic.to}`); }}
             >
                 {topic.cta || "আরো জানুন"}
                 <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-            </a>
+            </Link>
         </motion.div>
     );
 };
 
+// === Main Component ===
 export default function IslamicAccessibility() {
-    // Type added to useState
-    const [formData, setFormData] = useState<FormData>({ name: "", email: "", phone: "" });
+    const [formData, setFormData] = useState<FormData>({
+        name: "",
+        email: "",
+        phone: "",
+    });
+    const [error, setError] = useState("");
     const [submitted, setSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-    // Type added to event
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
-    // Type added to event
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // Simple client-side validation check
+
         if (!formData.name || !formData.email || !formData.phone) {
-            console.error("অনুগ্রহ করে সমস্ত ঘর পূরণ করুন।");
+            setError("অনুগ্রহ করে সব ঘর পূরণ করুন।");
             return;
         }
+
+        setError("");
+        setLoading(true);
+
+        // Fake delay to simulate submission
+        await new Promise((res) => setTimeout(res, 2000));
+
+        setLoading(false);
         setSubmitted(true);
-        setTimeout(() => setSubmitted(false), 4000);
         setFormData({ name: "", email: "", phone: "" });
+
+        setTimeout(() => setSubmitted(false), 4000);
     };
 
     return (
@@ -175,47 +198,58 @@ export default function IslamicAccessibility() {
                     <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
                         ভর্তি বা যোগাযোগ ফর্ম
                     </h3>
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="relative">
-                            <input
-                                type="text"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleChange}
-                                placeholder="আপনার নাম"
-                                required
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none"
-                            />
-                        </div>
-                        <div className="relative">
-                            <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                placeholder="ইমেইল"
-                                required
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none"
-                            />
-                        </div>
-                        <div className="relative sm:col-span-2">
-                            <input
-                                type="tel"
-                                name="phone"
-                                value={formData.phone}
-                                onChange={handleChange}
-                                placeholder="মোবাইল নাম্বার"
-                                required
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none"
-                            />
-                        </div>
+                        <input
+                            aria-label="আপনার নাম"
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder="আপনার নাম"
+                            required
+                            autoComplete="off"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none"
+                        />
+                        <input
+                            aria-label="ইমেইল"
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            placeholder="ইমেইল"
+                            required
+                            autoComplete="off"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none"
+                        />
+                        <input
+                            aria-label="মোবাইল নাম্বার"
+                            type="tel"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            placeholder="মোবাইল নাম্বার"
+                            required
+                            autoComplete="off"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none sm:col-span-2"
+                        />
                     </div>
+
+                    {error && (
+                        <p className="text-center text-red-600 font-medium mt-4">{error}</p>
+                    )}
+
                     <button
                         type="submit"
-                        className="mt-6 w-full py-3 bg-emerald-600 text-white rounded-xl font-semibold hover:bg-emerald-700 transition-all duration-300"
+                        disabled={loading}
+                        className={`mt-6 w-full py-3 rounded-xl font-semibold transition-all duration-300 ${loading
+                                ? "bg-emerald-400 cursor-not-allowed text-white"
+                                : "bg-emerald-600 hover:bg-emerald-700 text-white"
+                            }`}
                     >
-                        আবেদন পাঠান
+                        {loading ? "পাঠানো হচ্ছে..." : "আবেদন পাঠান"}
                     </button>
+
                     {submitted && (
                         <p className="text-center text-green-600 font-medium mt-4">
                             ✅ আপনার আবেদন সফলভাবে জমা হয়েছে!

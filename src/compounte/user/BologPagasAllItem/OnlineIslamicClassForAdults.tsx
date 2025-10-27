@@ -1,8 +1,8 @@
 "use client";
-import React, { useState, ChangeEvent, FormEvent, FC } from 'react';
-import { motion } from 'framer-motion';
-import { FaGraduationCap, FaClock, FaDollarSign, FaQuran, FaCheckCircle, FaUserGraduate, FaHeadset, FaEnvelope, FaBookReader, FaMousePointer } from 'react-icons/fa';
-import { BookOpen, MapPin, Zap, ChevronDown, ChevronUp, Users, DollarSign, Calendar } from 'lucide-react';
+import React, { useState, type ChangeEvent, type FC, type FormEvent, } from 'react';
+import { motion, type Variants, } from 'framer-motion';
+import { FaGraduationCap, FaClock, FaCheckCircle, FaHeadset, FaEnvelope, FaBookReader, FaMousePointer } from 'react-icons/fa';
+import { Zap, ChevronDown, ChevronUp, Users, DollarSign, Calendar } from 'lucide-react';
 
 // --- Type Definitions for Data and State ---
 interface Feature {
@@ -50,23 +50,35 @@ const secondaryBenefits: string[] = [
 ];
 
 // --- Framer Motion Variants (Unchanged) ---
-const sectionVariants = {
+
+// --- Framer Motion Variants ---
+const sectionVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
         opacity: 1,
         y: 0,
-        transition: { duration: 0.7, ease: "easeOut" }
-    }
+        transition: { duration: 0.7, ease: "easeOut" },
+    },
 };
 
-const cardVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: (i: number) => ({
+const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
         opacity: 1,
-        scale: 1,
-        transition: { delay: i * 0.1, duration: 0.5 }
-    })
+        transition: { staggerChildren: 0.1 },
+    },
 };
+
+const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 50, scale: 0.9 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: { duration: 0.5, ease: "easeOut" },
+    },
+};
+
 
 // --- FAQ Item Component (Kept for potential expansion/consistency) ---
 // Note: The new blog post does not contain FAQs, but keeping the structure for robustness.
@@ -118,7 +130,6 @@ const FAQItem: FC<FAQItemProps> = ({ q, a, index, activeIndex, setActiveIndex })
     );
 };
 
-
 // --- Main Component (Typed & Responsive) ---
 const OnlineIslamicClassForAdults: FC = () => {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -165,7 +176,7 @@ const OnlineIslamicClassForAdults: FC = () => {
                 {/* Introduction & Main CTA Section */}
                 <motion.section
                     className="mb-10 md:mb-14 bg-white p-5 sm:p-7 rounded-2xl shadow-xl border-l-4 border-teal-500"
-                    variants={sectionVariants}
+                    variants={cardVariants}
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
@@ -187,7 +198,7 @@ const OnlineIslamicClassForAdults: FC = () => {
                 {/* Feature/Why Choose Table Re-imagined as a Responsive Grid */}
                 <motion.section
                     className="mb-10 md:mb-14"
-                    variants={sectionVariants}
+                    variants={containerVariants}
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.2 }}

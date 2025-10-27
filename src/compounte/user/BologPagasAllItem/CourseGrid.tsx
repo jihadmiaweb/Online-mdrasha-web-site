@@ -1,15 +1,23 @@
 "use client";
 
+import { motion, type Variants, } from "framer-motion";
+import { Link } from "react-router-dom"; // ✅ fixed import
 
-import { motion } from "framer-motion";
-import { Link } from "react-router";
+// --- Define Course Type ---
+interface Course {
+    id: number;
+    to: string;
+    imageSrc: string;
+    title: string;
+    description: string;
+    icon: string;
+}
 
-
-
-const courseData = [
+// --- Course Data ---
+const courseData: Course[] = [
     {
         id: 1,
-        to: "/OnlineQuranCourse", // Added realistic link
+        to: "/OnlineQuranCourse",
         imageSrc: "/imgas/Bolog/1.jpeg",
         title:
             "Online Quran Memorization Course 2025 - Memorize with Certified Tutors in 12-24 Months",
@@ -61,16 +69,15 @@ const courseData = [
         id: 6,
         to: "/OnlineQuranCourse",
         imageSrc: "/imgas/Bolog/1.jpeg",
-        title:
-            "Advanced Arabic Language Course for Hifz Students",
+        title: "Advanced Arabic Language Course for Hifz Students",
         description:
             "This course focuses on essential Arabic grammar and vocabulary needed to deepen understanding of the Quran and Islamic texts for hifz students.",
         icon: "📚",
     },
 ];
 
-// --- Framer Motion Variants (Improved Staggering) ---
-const containerVariants = {
+// --- Framer Motion Variants ---
+const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
         opacity: 1,
@@ -80,7 +87,7 @@ const containerVariants = {
     },
 };
 
-const cardVariants = {
+const cardVariants: Variants = {
     hidden: { opacity: 0, y: 50, scale: 0.9 },
     visible: {
         opacity: 1,
@@ -91,12 +98,16 @@ const cardVariants = {
 };
 
 // --- Course Card Component ---
-const CourseCard = ({ course }) => {
+interface CourseCardProps {
+    course: Course;
+}
+
+const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
     return (
         <motion.div
             variants={cardVariants}
             className="relative bg-white/95 rounded-3xl shadow-2xl overflow-hidden backdrop-blur-md transition-all duration-300 flex flex-col cursor-pointer border-t-4 border-purple-500/50"
-            whileHover={{ scale: 1.03, boxShadow: "0 10px 30px rgba(168, 85, 247, 0.4)" }} // Purple shadow hover
+            whileHover={{ scale: 1.03, boxShadow: "0 10px 30px rgba(168, 85, 247, 0.4)" }}
             whileTap={{ scale: 0.98 }}
         >
             {/* Image with hover overlay */}
@@ -104,23 +115,24 @@ const CourseCard = ({ course }) => {
                 <motion.img
                     src={course.imageSrc}
                     alt={course.title}
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-700 ease-in-out"
                     whileHover={{ scale: 1.1 }}
                 />
-                {/* Hover overlay */}
                 <motion.div
                     className="absolute inset-0 bg-gradient-to-t from-purple-800/80 to-transparent flex items-end p-4 text-white text-lg font-bold opacity-0"
                     whileHover={{ opacity: 1 }}
                     transition={{ duration: 0.3 }}
                 >
-                    <span className="backdrop-blur-sm px-2 py-1 rounded-md text-sm">বিস্তারিত দেখুন →</span>
+                    <span className="backdrop-blur-sm px-2 py-1 rounded-md text-sm">
+                        বিস্তারিত দেখুন →
+                    </span>
                 </motion.div>
             </Link>
 
             {/* Content */}
             <div className="p-6 flex flex-col flex-grow">
                 <h3 className="text-xl font-extrabold text-gray-900 mb-2 leading-snug">
-                    {/* NEW DESIGN: Purple accent on icon */}
                     {course.icon && <span className="mr-2 text-2xl text-purple-600">{course.icon}</span>}
                     {course.title}
                 </h3>
@@ -128,14 +140,12 @@ const CourseCard = ({ course }) => {
                     {course.description}
                 </p>
 
-                {/* Continue Reading Button */}
                 <Link to={course.to} className="self-start">
                     <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.97 }}
-                        // NEW DESIGN: Vibrant pink/purple button
                         className="mt-4 bg-gradient-to-r cursor-pointer from-pink-500 to-purple-600 text-white font-bold py-2.5 px-6 rounded-full text-sm uppercase tracking-wider shadow-lg transition-all duration-300
-                            hover:from-pink-600 hover:to-purple-700"
+                        hover:from-pink-600 hover:to-purple-700"
                     >
                         CONTINUE READING
                     </motion.button>
@@ -146,12 +156,10 @@ const CourseCard = ({ course }) => {
 };
 
 // --- Main Grid Component ---
-const CourseGrid = () => {
+const CourseGrid: React.FC = () => {
     return (
-        // NEW DESIGN: Stronger background gradient for a floating effect
         <section className="bg-gradient-to-br from-indigo-50 to-purple-100 py-20 px-4 md:px-8">
             <div className="max-w-7xl mx-auto text-center mb-16">
-                {/* NEW DESIGN: Text with vibrant gradient */}
                 <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
                     <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-500">
                         🎓 Our Exclusive Online Programs 💡
@@ -162,7 +170,6 @@ const CourseGrid = () => {
                 </p>
             </div>
 
-            {/* RESPONSIVE GRID with Framer Motion Container */}
             <motion.div
                 className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto"
                 variants={containerVariants}
@@ -171,19 +178,17 @@ const CourseGrid = () => {
                 viewport={{ once: true, amount: 0.1 }}
             >
                 {courseData.map((course, index) => (
-                    <CourseCard key={course.id + "-" + index} course={course} index={index} />
+                    <CourseCard key={`${course.id}-${index}`} course={course} />
                 ))}
             </motion.div>
 
-            {/* View More Button */}
             <div className="text-center mt-20">
                 <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="bg-purple-600 text-white font-bold py-3.5 px-10 rounded-full shadow-xl transition-all duration-300 text-lg uppercase tracking-wider
-                        hover:bg-purple-700 shadow-purple-300/50"
+                    hover:bg-purple-700 shadow-purple-300/50"
                 >
-
                     View All Programs ({courseData.length})
                 </motion.button>
             </div>

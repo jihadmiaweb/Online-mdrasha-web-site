@@ -1,7 +1,8 @@
 "use client";
-import React, { FC } from 'react';
-import { motion } from 'framer-motion';
+
+import { motion, type Variants } from 'framer-motion';
 import { Clock, DollarSign, Calendar } from 'lucide-react';
+import type { FC } from 'react';
 import { Link } from 'react-router';
 
 // --- Type Definitions ---
@@ -56,14 +57,30 @@ const feeData: FeeSchedule[] = [
 ];
 
 // --- Framer Motion Variants ---
-const sectionVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
-};
+
 
 const rowVariants = {
     hidden: { opacity: 0, x: -20 },
     visible: (i: number) => ({ opacity: 1, x: 0, transition: { delay: i * 0.05, duration: 0.4 } }),
+};
+
+const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
+};
+const containerVariantss: Variants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
+}
+
+const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 40, scale: 0.96 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: { type: "spring", stiffness: 120, damping: 18 },
+    },
 };
 
 // --- Fee Table/Card Component ---
@@ -82,7 +99,7 @@ const FeeScheduleTable: FC<{ schedule: FeeSchedule }> = ({ schedule }) => {
     return (
         <motion.div
             className={`bg-white rounded-xl shadow-xl overflow-hidden border-t-4 ${border}`}
-            variants={sectionVariants}
+            variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
@@ -103,7 +120,7 @@ const FeeScheduleTable: FC<{ schedule: FeeSchedule }> = ({ schedule }) => {
                             <th className="px-6 py-3 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">Course Fee</th>
                         </tr>
                     </thead>
-                    <motion.tbody initial="hidden" animate="visible" variants={sectionVariants}>
+                    <motion.tbody initial="hidden" animate="visible" variants={itemVariants}>
                         {data.map((row, index) => (
                             <motion.tr key={index} className="hover:bg-gray-50 transition-colors" custom={index} variants={rowVariants}>
                                 <td className="px-6 py-4 whitespace-normal text-sm font-medium text-gray-800">{row.details}</td>
@@ -148,14 +165,14 @@ const CourseFeeStructures: FC = () => (
                 </p>
             </div>
 
-            <motion.section className="grid grid-cols-1 lg:grid-cols-3 gap-8" initial="hidden" animate="visible" variants={sectionVariants}>
+            <motion.section className="grid grid-cols-1 lg:grid-cols-3 gap-8" initial="hidden" animate="visible" variants={containerVariantss}>
                 {feeData.map((schedule, index) => (
                     <FeeScheduleTable key={index} schedule={schedule} />
                 ))}
             </motion.section>
 
             <motion.section className="mt-12 text-center bg-white p-8 rounded-xl shadow-xl border-b-4 border-green-600"
-                variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
+                variants={rowVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">💡 বিশেষ দ্রষ্টব্য (**Note**)</h2>
                 <p className="text-lg text-gray-600 mb-6">
                     সমস্ত ফি <strong>TK (বাংলাদেশি টাকা)</strong>-তে <strong>মাসিক ভিত্তিতে</strong> ধার্য করা হয়েছে। ভর্তির বিবরণ বা অন্যান্য সহায়তার জন্য অনুগ্রহ করে সরাসরি ইনস্টিটিউটের সাথে যোগাযোগ করুন।

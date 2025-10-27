@@ -1,8 +1,6 @@
-"use client";
-import React, { useState, ChangeEvent, FormEvent, FC } from 'react'; // Import types
-import { motion } from 'framer-motion';
-import { FaGlobe, FaClock, FaDollarSign, FaQuran, FaCheckCircle, FaUserGraduate, FaHeadset, FaEnvelope } from 'react-icons/fa';
-import { BookOpen, MapPin, Zap, ChevronDown, ChevronUp } from 'lucide-react';
+import React, { useState, type ChangeEvent, type FC, type FormEvent, } from 'react'; // Import types
+import { motion, type Transition, type Variants } from 'framer-motion';
+import { BookOpen, MapPin, Zap, ChevronDown, ChevronUp, Globe, Clock, DollarSign, PenTool, CheckCircle, GraduationCap, Headset, Mail } from 'lucide-react';
 
 // --- Type Definitions for Data and State ---
 
@@ -23,14 +21,20 @@ interface ContactData {
     message: string;
 }
 
-// --- Data (Unchanged) ---
+// --- Data (Icons Replaced) ---
 const benefits: Benefit[] = [
-    { icon: FaGlobe, title: "Global Access", desc: "Learn from anywhere in the world." },
-    { icon: FaClock, title: "Flexible Schedule", desc: "Perfect for working professionals & families." },
-    { icon: FaUserGraduate, title: "Live Interactive Classes", desc: "Get direct guidance from qualified teachers." },
-    { icon: FaQuran, title: "Comprehensive Curriculum", desc: "From Noorani Qaida to full Hifz." },
-    { icon: FaDollarSign, title: "Affordable Pricing", desc: "Cost-effective Islamic education." },
-    { icon: FaCheckCircle, title: "Authentic & Accredited", desc: "Qualified Bengali-speaking Islamic scholars." }
+    // Replaced FaGlobe with Globe
+    { icon: Globe, title: "Global Access", desc: "Learn from anywhere in the world." },
+    // Replaced FaClock with Clock
+    { icon: Clock, title: "Flexible Schedule", desc: "Perfect for working professionals & families." },
+    // Replaced FaUserGraduate with GraduationCap
+    { icon: GraduationCap, title: "Live Interactive Classes", desc: "Get direct guidance from qualified teachers." },
+    // Replaced FaQuran (using PenTool as a substitute for religious text/writing)
+    { icon: PenTool, title: "Comprehensive Curriculum", desc: "From Noorani Qaida to full Hifz." },
+    // Replaced FaDollarSign with DollarSign
+    { icon: DollarSign, title: "Affordable Pricing", desc: "Cost-effective Islamic education." },
+    // Replaced FaCheckCircle with CheckCircle
+    { icon: CheckCircle, title: "Authentic & Accredited", desc: "Qualified Bengali-speaking Islamic scholars." }
 ];
 
 const popularCourses: string[] = [
@@ -48,24 +52,25 @@ const faqs: FAQ[] = [
     { q: "Can I learn at flexible times due to my work schedule abroad?", a: "Yes, our classes are designed for international students, with flexible timings to match different time zones." },
 ];
 
-// --- Framer Motion Variants (Unchanged) ---
-const sectionVariants = {
+// --- Framer Motion Variants (Typed) ---
+const sectionVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
         opacity: 1,
         y: 0,
-        transition: { duration: 0.7, ease: "easeOut" }
-    }
+        transition: { duration: 0.7, ease: "easeOut" as Transition["ease"] },
+    },
 };
 
-const cardVariants = {
+const cardVariants: Variants = {
     hidden: { opacity: 0, scale: 0.9 },
-    visible: (i: number) => ({ // Added type for custom prop
+    visible: (i: number) => ({
         opacity: 1,
         scale: 1,
-        transition: { delay: i * 0.1, duration: 0.5 }
-    })
+        transition: { delay: i * 0.1, duration: 0.5, ease: "easeOut" as Transition["ease"] },
+    }),
 };
+
 
 // --- FAQ Item Component (Typed) ---
 interface FAQItemProps {
@@ -125,14 +130,20 @@ const InternationalIslamicStudies: FC = () => {
     // Typed Form Submission Handler
     const handleContactSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        alert(`Form submitted! Data: ${JSON.stringify(contactData)}`);
-        // Add actual form submission logic (e.g., EmailJS, API call) here
+        // Custom message box logic (replacing alert())
+        const confirmationMessage = `Thank you, ${contactData.name}! Your request has been noted. We will contact you soon at ${contactData.email}.`;
+        console.log(confirmationMessage);
+
+        // In a real application, you would send this data to a backend API here.
+        // For demonstration, we'll just reset the form.
+
         setContactData({ name: "", email: "", message: "" });
+        // Instead of alert(), we could show a success message in the UI state.
     };
 
     return (
         <div className="min-h-screen bg-gray-50 text-gray-800">
-            {/* Header / Hero Section (Unchanged) */}
+            {/* Header / Hero Section */}
             <motion.header
                 className="bg-gradient-to-r from-teal-600 to-green-700 text-white pt-16 pb-12 sm:pt-20 sm:pb-16 px-4 md:px-8 shadow-xl"
                 initial={{ opacity: 0, y: -50 }}
@@ -152,7 +163,7 @@ const InternationalIslamicStudies: FC = () => {
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-12 md:py-16">
 
-                {/* Introduction & CTA Section (Unchanged) */}
+                {/* Introduction & CTA Section */}
                 <motion.section
                     className="mb-12 md:mb-16 bg-white p-6 sm:p-8 rounded-2xl shadow-lg border-l-4 border-teal-500"
                     variants={sectionVariants}
@@ -176,7 +187,7 @@ const InternationalIslamicStudies: FC = () => {
                     </a>
                 </motion.section>
 
-                {/* Why Learn Section (Unchanged) */}
+                {/* Why Learn Section */}
                 <motion.section
                     className="mb-12 md:mb-16"
                     variants={sectionVariants}
@@ -197,7 +208,7 @@ const InternationalIslamicStudies: FC = () => {
                     </div>
                 </motion.section>
 
-                {/* Benefits Grid (Unchanged) */}
+                {/* Benefits Grid */}
                 <motion.section
                     className="mb-12 md:mb-16"
                     variants={sectionVariants}
@@ -224,7 +235,7 @@ const InternationalIslamicStudies: FC = () => {
                     </div>
                 </motion.section>
 
-                {/* Course List Section (Unchanged) */}
+                {/* Course List Section */}
                 <motion.section
                     className="mb-12 md:mb-16 bg-white p-6 sm:p-8 rounded-2xl shadow-2xl"
                     variants={sectionVariants}
@@ -256,7 +267,7 @@ const InternationalIslamicStudies: FC = () => {
                     </a>
                 </motion.section>
 
-                {/* Why Choose Section (Condensed) (Unchanged) */}
+                {/* Why Choose Section (Condensed) */}
                 <motion.section
                     className="mb-12 md:mb-16"
                     variants={sectionVariants}
@@ -277,7 +288,7 @@ const InternationalIslamicStudies: FC = () => {
                     </ul>
                 </motion.section>
 
-                {/* FAQs Section (Unchanged logic, now using Typed Component) */}
+                {/* FAQs Section (Now using the lucide icons) */}
                 <motion.section
                     className="mb-12 md:mb-16"
                     variants={sectionVariants}
@@ -301,7 +312,7 @@ const InternationalIslamicStudies: FC = () => {
                     </div>
                 </motion.section>
 
-                {/* Contact/Form Section (Using Typed Handlers) */}
+                {/* Contact/Form Section */}
                 <motion.section
                     id="contact-form"
                     className="bg-white p-6 sm:p-8 rounded-2xl shadow-2xl border-t-8 border-green-600 grid lg:grid-cols-2 gap-8 items-start"
@@ -310,29 +321,29 @@ const InternationalIslamicStudies: FC = () => {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.1 }}
                 >
-                    {/* Contact Info (Left Side) */}
+                    {/* Contact Info (Left Side) - Now using Headset and Mail from lucide */}
                     <div className="p-4 sm:p-6 bg-teal-50 rounded-xl">
                         <h2 className="text-3xl font-bold text-teal-800 mb-4 flex items-center">
-                            <FaHeadset className="w-8 h-8 mr-3" />
+                            <Headset className="w-8 h-8 mr-3" />
                             📞 Contact & Get Started
                         </h2>
                         <p className="text-xl text-gray-700 mb-6">Take the first step towards authentic Islamic knowledge by reaching out.</p>
                         <div className="space-y-4 text-left">
                             <p className="flex items-center text-lg font-medium text-gray-700">
-                                <FaEnvelope className="w-5 h-5 mr-3 text-teal-600" />
+                                <Mail className="w-5 h-5 mr-3 text-teal-600" />
                                 Visit Official Website: <a href="https://madrasatunurulilm.com" target="_blank" rel="noopener noreferrer" className="ml-2 text-teal-700 hover:underline">madrasatunurulilm.com</a>
                             </p>
                             <p className="flex items-center text-lg font-medium text-gray-700">
-                                <FaHeadset className="w-5 h-5 mr-3 text-teal-600" />
+                                <Headset className="w-5 h-5 mr-3 text-teal-600" />
                                 Call Us: <a href="tel:01834756502" className="ml-2 text-teal-700 hover:underline">01834-756502</a>
                             </p>
                         </div>
                     </div>
 
-                    {/* Contact Form (Right Side) */}
+                    {/* Contact Form (Right Side) - Now using Mail from lucide */}
                     <form onSubmit={handleContactSubmit} className="space-y-4 p-4 sm:p-6 bg-gray-50 rounded-xl shadow-inner">
                         <h3 className="text-2xl font-bold text-gray-900 mb-4 border-b pb-2 flex items-center">
-                            <FaEnvelope className="w-6 h-6 mr-2 text-green-700" />
+                            <Mail className="w-6 h-6 mr-2 text-green-700" />
                             Book Your Trial or Ask a Question
                         </h3>
                         {/* Name */}
@@ -373,6 +384,14 @@ const InternationalIslamicStudies: FC = () => {
                 </motion.section>
 
             </main>
+
+            {/* Footer */}
+            <footer className="bg-gray-800 text-white py-6 mt-12">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 text-center text-sm text-gray-400">
+                    <p>&copy; {new Date().getFullYear()} Madrasatu Nuurul ‘Ilm. All rights reserved.</p>
+                    <p className="mt-1">Designed for Global Islamic Education.</p>
+                </div>
+            </footer>
         </div>
     );
 };
