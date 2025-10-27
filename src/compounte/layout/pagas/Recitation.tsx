@@ -253,10 +253,12 @@ const Recitation: React.FC = () => {
                     </div>
                 </motion.div>
             )}
+            <style>
+                {`
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap');
+  `}
+            </style>
 
-            <style jsx global>{`
-                @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap');
-            `}</style>
         </div>
     );
 };

@@ -7,10 +7,29 @@ const MODEL_NAME = "imagen-3.0-generate-002";
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:predict?key=${apiKey}`;
 
 // === Exponential Backoff ===
-const fetchWithExponentialBackoff = async (url, options, retries = 5, delay = 1000) => {
+interface FetchOptions extends RequestInit {
+    method: string;
+    headers: {
+        'Content-Type': string;
+    };
+    body: string;
+}
+
+interface ApiResponse {
+    predictions?: Array<{
+        bytesBase64Encoded?: string;
+    }>;
+}
+
+const fetchWithExponentialBackoff = async (
+    url: string,
+    options: FetchOptions,
+    retries: number = 5,
+    delay: number = 1000
+): Promise<ApiResponse> => {
     for (let i = 0; i < retries; i++) {
         try {
-            const response = await fetch(url, options);
+            const response: Response = await fetch(url, options);
             if (!response.ok) {
                 if (response.status === 429 && i < retries - 1) {
                     await new Promise(resolve => setTimeout(resolve, delay));
@@ -26,10 +45,11 @@ const fetchWithExponentialBackoff = async (url, options, retries = 5, delay = 10
             delay *= 2;
         }
     }
+    throw new Error('Maximum retries reached');
 };
 
 // === Timing Card ===
-const TimingCard = ({ title, time, details, icon: Icon, delay }) => (
+const TimingCard = ({ title, time, details, icon: Icon, delay }: { title: string; time: string; details: string; icon: React.ElementType; delay: number }) => (
     <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         whileInView={{ opacity: 1, scale: 1, y: 0 }}
@@ -75,9 +95,9 @@ const timingsData = [
 
 // === Main Component ===
 export default function FlexibleClassTimings() {
-    const [imageUrl, setImageUrl] = useState(null);
+    const [imageUrl, setImageUrl] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
     const [formData, setFormData] = useState({ name: "", phone: "", batch: "" });
     const [submitted, setSubmitted] = useState(false);
 
@@ -117,8 +137,19 @@ export default function FlexibleClassTimings() {
         generateImage();
     }, [generateImage]);
 
-    const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-    const handleSubmit = (e) => {
+    interface FormEvent {
+        target: {
+            name: string;
+            value: string;
+        }
+    }
+
+    const handleChange = (e: FormEvent): void => setFormData({ ...formData, [e.target.name]: e.target.value });
+    interface FormSubmitEvent extends React.FormEvent<HTMLFormElement> {
+        preventDefault: () => void;
+    }
+
+    const handleSubmit = (e: FormSubmitEvent): void => {
         e.preventDefault();
         if (!formData.name || !formData.phone || !formData.batch) return;
         setSubmitted(true);

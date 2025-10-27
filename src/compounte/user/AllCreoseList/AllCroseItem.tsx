@@ -1,7 +1,6 @@
-
-import { motion } from "framer-motion";
-import { ChevronRight, Filter, Grid } from 'lucide-react';
-import { Link } from "react-router";
+import { motion, type Transition, type Variants, } from "framer-motion";
+import { ChevronRight, Filter, Grid } from "lucide-react";
+import { Link } from "react-router-dom";
 
 // Course Type Interface
 interface Course {
@@ -9,84 +8,37 @@ interface Course {
     image: string;
     titleBn: string;
     titleEn: string;
-    to: string
+    to: string;
 }
 
-// Mock Course Data - Please note: actual image paths are not accessible in this environment.
-// We use placeholder URLs.
+// Mock Course Data
 const courses: Course[] = [
-    {
-        id: 1,
-        to: "/AsmaulHusnaCourse",
-        image: "imgas/1.jpg",
-        titleBn: "সম্পূর্ণ আসমাউল হুসনা মুখস্থ কোর্স",
-        titleEn: "Complete Asmaul Husna memorization course",
-    },
-    {
-        id: 2,
-        to: "/PerfectSalahCourse",
-        image: "imgas/2.jpg",
-        titleBn: "অনলাইন পারফেক্ট সালাহ/নামাজ শিক্ষা কোর্স",
-        titleEn: "Perfect Salah/Namaz Education Course Online",
-    },
-    {
-        id: 3,
-        to: "/TajweedQuranCourse",
-        image: "imgas/3.jpg",
-        titleBn: "তাজওয়ীদ সহ কুরআন শিক্ষা কোর্স",
-        titleEn: "Quran learning Course with Tajweed",
-    },
-    {
-        id: 4,
-        to: "/NooraniQaidaCourse",
-        image: "imgas/4.jpg",
-        titleBn: "বেসিক অনলাইন নূরানি কায়দা কোর্স",
-        titleEn: "Basic Online Noorani Qaida Course",
-    },
-    {
-        id: 5,
-        to: "/ArabicGrammarCourse",
-        image: "imgas/5.jpg",
-        titleBn: "সহজ আরবি ব্যাকরণ কোর্স",
-        titleEn: "Easy Arabic Grammar Course",
-    },
-    {
-        id: 6,
-        to: "/CompleteQuranHifz",
-        image: "imgas/6.jpg",
-        titleBn: "সম্পূর্ণ কুরআন হিফজ প্রোগ্রাম",
-        titleEn: "Complete Quran Hifz Program",
-    },
-    {
-        id: 7,
-        to: "/SeerahCourse",
-        image: "imgas/7.jpg",
-        titleBn: "নবীজির জীবনী (সীরাহ) অধ্যয়ন",
-        titleEn: "Prophet's Biography (Seerah) Studies",
-    },
-    {
-        id: 8,
-        to: "/FiqhCourse",
-        image: "imgas/8.jpg",
-        titleBn: "ফিকহ এর মৌলিক ধারণা কোর্স",
-        titleEn: "Basic Fiqh Principles Course",
-    },
+    { id: 1, to: "/AsmaulHusnaCourse", image: "imgas/1.jpg", titleBn: "সম্পূর্ণ আসমাউল হুসনা মুখস্থ কোর্স", titleEn: "Complete Asmaul Husna memorization course" },
+    { id: 2, to: "/PerfectSalahCourse", image: "imgas/2.jpg", titleBn: "অনলাইন পারফেক্ট সালাহ/নামাজ শিক্ষা কোর্স", titleEn: "Perfect Salah/Namaz Education Course Online" },
+    { id: 3, to: "/TajweedQuranCourse", image: "imgas/3.jpg", titleBn: "তাজওয়ীদ সহ কুরআন শিক্ষা কোর্স", titleEn: "Quran learning Course with Tajweed" },
+    { id: 4, to: "/NooraniQaidaCourse", image: "imgas/4.jpg", titleBn: "বেসিক অনলাইন নূরানি কায়দা কোর্স", titleEn: "Basic Online Noorani Qaida Course" },
+    { id: 5, to: "/ArabicGrammarCourse", image: "imgas/5.jpg", titleBn: "সহজ আরবি ব্যাকরণ কোর্স", titleEn: "Easy Arabic Grammar Course" },
+    { id: 6, to: "/CompleteQuranHifz", image: "imgas/6.jpg", titleBn: "সম্পূর্ণ কুরআন হিফজ প্রোগ্রাম", titleEn: "Complete Quran Hifz Program" },
+    { id: 7, to: "/SeerahCourse", image: "imgas/7.jpg", titleBn: "নবীজির জীবনী (সীরাহ) অধ্যয়ন", titleEn: "Prophet's Biography (Seerah) Studies" },
+    { id: 8, to: "/FiqhCourse", image: "imgas/8.jpg", titleBn: "ফিকহ এর মৌলিক ধারণা কোর্স", titleEn: "Basic Fiqh Principles Course" },
 ];
 
-// Animation variants for staggered entrance (Scroll Effect)
-const containerVariants = {
+// Framer Motion Transition
+const spring: Transition = { type: "spring", stiffness: 100, damping: 20 };
+
+// Container Variants
+const containerVariants: Variants = {
     hidden: { opacity: 0 },
     show: {
         opacity: 1,
-        transition: {
-            staggerChildren: 0.1, // প্রতিটি কার্ড একে একে আসবে
-        },
+        transition: { staggerChildren: 0.1 }, // প্রতিটি কার্ড একে একে আসবে
     },
 };
 
-const itemVariants = {
+// Item Variants (TypeScript-safe)
+const itemVariants: Variants = {
     hidden: { opacity: 0, y: 50, scale: 0.9 },
-    show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 100, damping: 20 } },
+    show: { opacity: 1, y: 0, scale: 1, transition: spring },
 };
 
 export default function CourseGrid() {
@@ -132,14 +84,14 @@ export default function CourseGrid() {
                 variants={containerVariants}
                 initial="hidden"
                 whileInView="show"
-                viewport={{ once: true, amount: 0.2 }} // যখন কন্টেইনারের ২০% স্ক্রিনে আসবে, তখন অ্যানিমেশন শুরু হবে
+                viewport={{ once: true, amount: 0.2 }}
             >
                 {courses.map((course) => (
                     <motion.div
                         key={course.id}
                         className="bg-white rounded-2xl shadow-xl overflow-hidden cursor-pointer 
-                        transform transition-all duration-300 ease-in-out
-                        hover:scale-[1.03] hover:shadow-2xl hover:border-indigo-400 border border-transparent"
+              transform transition-all duration-300 ease-in-out
+              hover:scale-[1.03] hover:shadow-2xl hover:border-indigo-400 border border-transparent"
                         variants={itemVariants}
                     >
                         {/* Image Area */}
@@ -154,15 +106,13 @@ export default function CourseGrid() {
                             <h3 className="font-bold text-xl mb-1 text-gray-800 leading-snug">{course.titleBn}</h3>
                             <p className="text-sm text-indigo-600 font-medium uppercase tracking-wider">{course.titleEn}</p>
                             <div className="mt-4">
-                                <a
-                                    href={`/course/${course.id}`}
+                                <Link
+                                    to={course.to}
                                     className="inline-block bg-indigo-500 text-white text-sm font-semibold px-4 py-2 rounded-lg 
-                                   hover:bg-indigo-600 transition duration-200"
+                    hover:bg-indigo-600 transition duration-200"
                                 >
-                                    <Link to={course.to}>
-                                        বিস্তারিত দেখুন
-                                    </Link>
-                                </a>
+                                    বিস্তারিত দেখুন
+                                </Link>
                             </div>
                         </div>
                     </motion.div>

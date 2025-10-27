@@ -1,55 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, type ChangeEvent, type FormEvent } from "react";
 import { User, Mail, MessageSquare, Send, Check, Zap, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from "framer-motion";
 
+interface FreeTrialFormData {
+    name: string;
+    phoneOrEmail: string;
+    message: string;
+}
+
 export default function FreeTrialContact() {
-    const [name, setName] = useState("");
-    const [phoneOrEmail, setPhoneOrEmail] = useState("");
-    const [message, setMessage] = useState("");
-    const [submitted, setSubmitted] = useState(false);
+    const [formData, setFormData] = useState<FreeTrialFormData>({
+        name: "",
+        phoneOrEmail: "",
+        message: "",
+    });
+    const [submitted, setSubmitted] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
 
-    // বাস্তব ক্ষেত্রে আপনার যোগাযোগের তথ্য এখানে প্রতিস্থাপন করুন
-    const supportEmail = "support@example.com";
-    const supportPhoneNumber = "8801700000000"; // উদাহরণস্বরূপ বাংলাদেশের ফোন নম্বর
+    const supportEmail: string = "support@example.com";
+    const supportPhoneNumber: string = "8801700000000";
 
-    const subject = encodeURIComponent("ফ্রি ট্রায়াল অনুরোধ (Free Trial Request)");
+    const subject: string = encodeURIComponent("ফ্রি ট্রায়াল অনুরোধ (Free Trial Request)");
 
-    const prefilledMessage = encodeURIComponent(
-        `নাম: ${name || "[আপনার নাম]"}\nযোগাযোগ: ${phoneOrEmail || "[মোবাইল/ইমেইল]"}\n\nমেসেজ: ${message || "[আপনার বার্তা]"}`
+    const prefilledMessage: string = encodeURIComponent(
+        `নাম: ${formData.name || "[আপনার নাম]"}\nযোগাযোগ: ${formData.phoneOrEmail || "[মোবাইল/ইমেইল]"}\n\nমেসেজ: ${formData.message || "[আপনার বার্তা]"}`
     );
 
-    async function handleSubmit(e: React.FormEvent) {
+    function handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    }
+
+    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         setError(null);
         setLoading(true);
 
         try {
-            // --- সিমুলেটেড ব্যাকএন্ড কল ---
-            // বাস্তব অ্যাপ্লিকেশনে, এটি আপনার API এনডপয়েন্টের সাথে একটি fetch/axios কল দ্বারা প্রতিস্থাপিত করুন।
-            console.log("Submitting form data:", { name, phoneOrEmail, message });
-            await new Promise(resolve => setTimeout(resolve, 1500)); // নেটওয়ার্ক লেটেন্সি সিমুলেট করা
+            // Simulate network request
+            console.log("Submitting form data:", formData);
+            await new Promise(resolve => setTimeout(resolve, 1500));
 
-            // মৌলিক ভ্যালিডেশন
-            if (name.trim() === "" || phoneOrEmail.trim() === "") {
+            if (formData.name.trim() === "" || formData.phoneOrEmail.trim() === "") {
                 throw new Error("অনুগ্রহ করে নাম ও যোগাযোগের তথ্য পূরণ করুন।");
             }
 
             setSubmitted(true);
 
-            // সফল সাবমিশনের পর ফর্মটি খালি করার জন্য:
-            // setName(""); setPhoneOrEmail(""); setMessage("");
-
-        } catch (err: any) {
-            setError(err.message || "ফর্ম জমা দিতে ব্যর্থ। অনুগ্রহ করে সরাসরি যোগাযোগ করুন।");
+        } catch (err: unknown) {
+            if (err instanceof Error) setError(err.message);
+            else setError("ফর্ম জমা দিতে ব্যর্থ। অনুগ্রহ করে সরাসরি যোগাযোগ করুন।");
         } finally {
             setLoading(false);
         }
     }
 
-    const labelClasses = "block text-sm font-medium text-gray-700 mb-1";
-
+    const labelClasses: string = "block text-sm font-medium text-gray-700 mb-1";
 
     return (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
@@ -81,9 +88,7 @@ export default function FreeTrialContact() {
                             <button
                                 onClick={() => {
                                     setSubmitted(false);
-                                    setName("");
-                                    setPhoneOrEmail("");
-                                    setMessage("");
+                                    setFormData({ name: "", phoneOrEmail: "", message: "" });
                                 }}
                                 className="mt-4 inline-flex items-center text-sm font-medium text-indigo-600 hover:text-indigo-800 transition duration-150"
                             >
@@ -100,7 +105,6 @@ export default function FreeTrialContact() {
                             exit={{ opacity: 0 }}
                             transition={{ duration: 0.5 }}
                         >
-                            {/* Error Message */}
                             {error && (
                                 <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm">
                                     {error}
@@ -114,8 +118,9 @@ export default function FreeTrialContact() {
                                     <User className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
                                     <input
                                         id="name"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleChange}
                                         required
                                         className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-150 pl-12"
                                         placeholder="আপনার সম্পূর্ণ নাম"
@@ -131,8 +136,9 @@ export default function FreeTrialContact() {
                                     <Mail className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
                                     <input
                                         id="contact"
-                                        value={phoneOrEmail}
-                                        onChange={(e) => setPhoneOrEmail(e.target.value)}
+                                        name="phoneOrEmail"
+                                        value={formData.phoneOrEmail}
+                                        onChange={handleChange}
                                         required
                                         className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-150 pl-12"
                                         placeholder="01xxxxxxxxx অথবা someone@mail.com"
@@ -149,8 +155,9 @@ export default function FreeTrialContact() {
                                     <MessageSquare className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
                                     <textarea
                                         id="message"
-                                        value={message}
-                                        onChange={(e) => setMessage(e.target.value)}
+                                        name="message"
+                                        value={formData.message}
+                                        onChange={handleChange}
                                         rows={4}
                                         className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-150 pl-12 pt-3"
                                         placeholder="আপনি কোন সার্ভিস/প্যাকেজে ফ্রি ট্রায়াল চান — সংক্ষিপ্ত বর্ণনা দিন"
@@ -158,9 +165,8 @@ export default function FreeTrialContact() {
                                 </div>
                             </div>
 
-                            {/* Action Buttons */}
+                            {/* Buttons */}
                             <div className="flex flex-col gap-3 pt-2">
-                                {/* Form Submit Button */}
                                 <button
                                     type="submit"
                                     disabled={loading}
@@ -179,27 +185,20 @@ export default function FreeTrialContact() {
                                     )}
                                 </button>
 
-                                {/* Alternative Contact Links */}
+                                {/* WhatsApp & Mail Links */}
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                    {/* WhatsApp quick link */}
                                     <a
                                         href={`https://wa.me/${supportPhoneNumber}?text=${prefilledMessage}`}
                                         target="_blank"
                                         rel="noreferrer"
                                         className="w-full inline-flex justify-center items-center bg-green-500 text-white font-semibold px-4 py-3 rounded-xl shadow-md hover:bg-green-600 transition duration-300"
                                     >
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="w-5 h-5 mr-2 fill-current">
-                                            <path d="M380.9 97.4C339.4 51.6 279.7 21.6 215.8 21.6 127 21.6 52 93.6 52 186.2c0 32.5 9.7 63 28.3 89.6L5.4 402.7c-3.2 12.3 8.2 24 20.2 20.3l119.2-34.5c24.6 15.6 52.8 24.3 82.8 24.3 88.8 0 163.9-72 163.9-164.6 0-38.2-13.4-74.1-37.4-104.5zM215.8 393.1c-25.1 0-49.3-7.5-70.1-21.8l-5.4-3.2-56.3 16.3 16.5-54.7-3.5-5.6c-17.7-28.1-27-60.5-27-94.6C68.9 116.5 137.9 52 215.8 52c42.5 0 82.5 17 112.5 47.7 30 30.7 46.8 70.8 46.8 113.6 0 87.1-70.9 157.5-157.3 157.5zM340.9 220c-5.5-2.8-32.8-16.2-37.9-18.1-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.5-14.3 18.1-17.6 21.8-3.3 3.7-6.5 4.1-12.1 1.4-11.8-5.7-47.3-29.2-89.4-54.6-33-19.5-55.5-32.8-59.3-39-3.7-6.2-4-8.8-4-12.1 0-3.3.4-6.5 1.8-8.8 1.4-2.4 3.7-4.1 5.5-6.2 1.7-2.1 3.7-3.7 5.5-5.8 1.7-2 2-3.7 3.3-6.2 1.3-2.4 1.3-4.1 1.8-5.5.5-1.4.2-3.3-.2-4.1-.4-.8-3.7-9.4-5.1-13.1-1.3-3.7-2.6-3.1-4-3.1s-2.8.4-4.1.6c-1.3.2-3.3.5-5.1.5-1.7 0-4-.2-6.2-2.8-2.2-2.8-8.5-8.3-12.1-11.8-3.7-3.5-7.7-2.8-12.1-2.8-4.4 0-8.8-.7-13.4-.7-4.5 0-8.8 0-12.5 4.7-3.7 4.7-14.3 14-14.3 34.3 0 20.3 14.7 39.8 16.8 42.5 2.1 2.7 28.5 43.5 69.5 60.1 41 16.6 65.2 16.9 74 15.6 9.4-1.3 29.2-12 33.4-23.3 4.2-11.3 4.2-20.9 2.9-23.3z" />
-                                        </svg>
                                         WhatsApp এ যোগাযোগ
                                     </a>
-
-                                    {/* Mailto quick link */}
                                     <a
                                         href={`mailto:${supportEmail}?subject=${subject}&body=${prefilledMessage}`}
                                         className="w-full inline-flex justify-center items-center bg-gray-700 text-white font-semibold px-4 py-3 rounded-xl shadow-md hover:bg-gray-800 transition duration-300"
                                     >
-                                        <Mail className="w-5 h-5 mr-2" />
                                         ইমেইল করুন
                                     </a>
                                 </div>

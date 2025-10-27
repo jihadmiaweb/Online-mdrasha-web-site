@@ -3,6 +3,17 @@
 import React, { useState } from "react"; // useState আমদানি করা হলো
 import { motion } from "framer-motion";
 
+// অ্যানিমেশন ভ্যারিয়েন্টস (Animation variants)
+const containerVariants = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { staggerChildren: 0.1 } }, // স্ট্যাগার চিলড্রেন আরও দ্রুত
+};
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 50, scale: 0.95 },
+    show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring" as const, stiffness: 120, damping: 15 } }, // উন্নত স্প্রিং ইফেক্ট
+};
+
 // মক কোর্স স্টেপস (Mock Course Steps) - ফিকহ অধ্যায়
 const fiqhSteps = [
     {
@@ -33,29 +44,25 @@ const fiqhSteps = [
     {
         id: 6,
         title: "ফিকহের উৎস ও ইতিহাস", // অতিরিক্ত একটি ধাপ যোগ করা হলো
-        description: "কুরআন, সুন্নাহ, ইজমা ও কিয়াস - ফিকহের মূল উৎসসমূহ সম্পর্কে জানা।",
+        description: "কুরআন, সুন্নাহ, ইজমা ও কিয়াস - ফিকহের মূল উৎসসমূহ সম্পর্কে জানা।",
     },
 ];
 
-// অ্যানিমেশন ভ্যারিয়েন্টস (Animation variants)
-const containerVariants = {
-    hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.1 } }, // স্ট্যাগার চিলড্রেন আরও দ্রুত
-};
-
-const itemVariants = {
-    hidden: { opacity: 0, y: 50, scale: 0.95 },
-    show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 120, damping: 15 } }, // উন্নত স্প্রিং ইফেক্ট
-};
 
 // সিঙ্গেল স্টেপ কার্ড কম্পোনেন্ট (Component for a single Fiqh step)
-const FiqhStepCard = ({ step }) => (
+type FiqhStep = {
+    id: number;
+    title: string;
+    description: string;
+};
+
+const FiqhStepCard = ({ step }: { step: FiqhStep }) => (
     <motion.div
         className="relative bg-white border border-yellow-100 rounded-3xl shadow-xl p-6 md:p-8 
-               hover:shadow-2xl hover:border-yellow-300 transition-all duration-300 ease-in-out
-               flex flex-col space-y-4"
+                       hover:shadow-2xl hover:border-yellow-300 transition-all duration-300 ease-in-out
+                       flex flex-col space-y-4"
         variants={itemVariants}
-        whileHover={{ y: -5, scale: 1.02 }} // হোভারের সময় সামান্য উপরে ওঠা ও স্কেল হওয়া
+        whileHover={{ y: -5, scale: 1.02 }} // হোভারের সময় সামান্য উপরে ওঠা ও স্কেল হওয়া
     >
         {/* স্টেপ ব্যাজ ও টাইটেল */}
         <div className="flex items-start mb-2">
@@ -67,14 +74,14 @@ const FiqhStepCard = ({ step }) => (
             </h2>
         </div>
 
-        {/* কন্টেন্ট এরিয়া (Content Area) */}
+        {/* কন্টেন্ট এরিয়া (Content Area) */}
         <p className="text-gray-600 text-sm md:text-base border-t border-gray-100 pt-3">
             {step.description}
         </p>
     </motion.div>
 );
 
-const FiqhCourse: React.FC = () => {
+const FiqhCourse: React.FC = () => { // কম্পোনেন্টের নাম App হিসেবে সেট করা হয়েছে
     const [clickMessage, setClickMessage] = useState("");
 
     const handleStartClick = () => {
@@ -95,13 +102,13 @@ const FiqhCourse: React.FC = () => {
                     ফিকহ এর মৌলিক ধারণা কোর্স
                 </h1>
                 <p className="mt-4 text-lg text-yellow-700">
-                    ইসলামী আইন এবং ফিকহের মূল ধারণাগুলি শেখার জন্য সংক্ষিপ্ত এবং সহজ পথ। [Image of an open book with Islamic art]
+                    ইসলামী আইন এবং ফিকহের মূল ধারণাগুলি শেখার জন্য সংক্ষিপ্ত এবং সহজ পথ।
                 </p>
             </div>
 
             {/* মেইন গ্রিড কন্টেইনার (Main Grid/Flow Container) */}
             <motion.div
-                // গ্রিড লেআউট: মোবাইলে ১ কলাম, ট্যাবলেটে ২ কলাম, বড় স্ক্রিনে ৩ কলাম
+                // গ্রিড লেআউট: মোবাইলে ১ কলাম, ট্যাবলেটে ২ কলাম, বড় স্ক্রিনে ৩ কলাম
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto"
                 variants={containerVariants}
                 initial="hidden"
@@ -121,7 +128,7 @@ const FiqhCourse: React.FC = () => {
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
-                        className="mb-4 p-3 bg-yellow-100 text-yellow-800 rounded-lg font-medium"
+                        className="mb-4 p-3 bg-yellow-100 text-yellow-800 rounded-lg font-medium shadow-md"
                     >
                         {clickMessage}
                     </motion.div>
@@ -130,10 +137,9 @@ const FiqhCourse: React.FC = () => {
                 <button
                     onClick={handleStartClick}
                     className="px-8 py-3 bg-yellow-600 text-white font-semibold text-lg rounded-full shadow-lg
-                         hover:bg-yellow-700 hover:shadow-xl transform hover:scale-105 transition-all duration-300
-                         focus:outline-none focus:ring-4 focus:ring-yellow-300"
+                             hover:bg-yellow-700 hover:shadow-xl transform hover:scale-105 transition-all duration-300
+                             focus:outline-none focus:ring-4 focus:ring-yellow-300"
                 >
-                    {/* 'From:' অংশটি হলুদ রং ও বোল্ড ফন্ট দিয়ে হাইলাইট করা হলো */}
                     <span className="font-extrabold text-white mr-1"></span>
                     এখনই ফিকহ অধ্যয়ন শুরু করুন
                 </button>

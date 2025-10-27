@@ -100,9 +100,9 @@ const StepCard: React.FC<{ step: GrammarStep, index: number }> = ({ step, index 
         <div
             ref={setTargetRef} // Use the ref callback to capture the element
             id={`step-${step.id}`}
-            className={`bg-white rounded-2xl shadow-xl p-6 transition-all duration-700 ease-out 
-                         hover:shadow-2xl hover:border-purple-500 border-b-4 border-white cursor-pointer 
-                         ${transitionClasses} 
+            className={`bg-white rounded-2xl shadow-xl p-6 transition-all duration-700 ease-out
+                         hover:shadow-2xl hover:border-purple-500 border-b-4 border-white cursor-pointer
+                         ${transitionClasses}
                          hover:scale-[1.02]`}
         >
             <div className="flex items-start space-x-4 mb-3">
@@ -131,12 +131,12 @@ const FreeTrialContactSection: React.FC = () => {
     const supportEmail = "support@example.com";
     const supportPhoneNumber = "8801700000000";
 
-    const subject = encodeURIComponent("ফ্রি ট্রায়াল অনুরোধ (Arabic Grammar Free Trial Request)");
+    // const subject = encodeURIComponent("ফ্রি ট্রায়াল অনুরোধ (Arabic Grammar Free Trial Request)");
 
-    // Ensure prefilledMessage uses the current state values for Mailto/WhatsApp links
-    const prefilledMessage = encodeURIComponent(
-        `কোর্স: সহজ আরবি ব্যাকরণ কোর্স\nনাম: ${name || "[আপনার নাম]"}\nযোগাযোগ: ${phoneOrEmail || "[মোবাইল/ইমেইল]"}\n\nমেসেজ: ${message || "[আপনার বার্তা]"}`
-    );
+    // // Ensure prefilledMessage uses the current state values for Mailto/WhatsApp links
+    // const prefilledMessage = encodeURIComponent(
+    //     `কোর্স: সহজ আরবি ব্যাকরণ কোর্স\nনাম: ${name || "[আপনার নাম]"}\nযোগাযোগ: ${phoneOrEmail || "[মোবাইল/ইমেইল]"}\n\nমেসেজ: ${message || "[আপনার বার্তা]"}`
+    // );
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -149,13 +149,18 @@ const FreeTrialContactSection: React.FC = () => {
                 throw new Error("অনুগ্রহ করে নাম ও যোগাযোগের তথ্য পূরণ করুন।");
             }
 
-            // সিমুলেটেড ব্যাকএন্ড কল 
+            // সিমুলেটেড ব্যাকএন্ড কল
             console.log("Submitting form data:", { name, phoneOrEmail, message });
             await new Promise(resolve => setTimeout(resolve, 1500));
 
             setSubmitted(true);
-        } catch (err: any) {
-            setError(err.message || "ফর্ম জমা দিতে ব্যর্থ। অনুগ্রহ করে সরাসরি যোগাযোগ করুন।");
+        } catch (err) {
+            // Narrow the unknown error before accessing .message
+            if (err instanceof Error) {
+                setError(err.message || "ফর্ম জমা দিতে ব্যর্থ। অনুগ্রহ করে সরাসরি যোগাযোগ করুন।");
+            } else {
+                setError(String(err) || "ফর্ম জমা দিতে ব্যর্থ। অনুগ্রহ করে সরাসরি যোগাযোগ করুন।");
+            }
         } finally {
             setLoading(false);
         }

@@ -51,7 +51,20 @@ const sampleCurriculum = [
 ];
 
 // --- ছোট কম্পোনেন্ট: পাঠ্যক্রমের আইটেম (Curriculum Item) ---
-const CurriculumItem = ({ item, expanded, setExpanded }) => {
+type CurriculumType = {
+    id: number;
+    title: string;
+    desc: string;
+    details: string[];
+};
+
+type CurriculumItemProps = {
+    item: CurriculumType;
+    expanded: number | null;
+    setExpanded: (id: number | null) => void;
+};
+
+const CurriculumItem: React.FC<CurriculumItemProps> = ({ item, expanded, setExpanded }) => {
     const isOpen = expanded === item.id;
 
     return (
@@ -104,8 +117,8 @@ const CurriculumItem = ({ item, expanded, setExpanded }) => {
 export default function QuranTajweedCourse({ className = "" }) {
     const [playing, setPlaying] = useState(false);
     const [selectedTeacher, setSelectedTeacher] = useState(sampleTeachers[0]);
-    const [expanded, setExpanded] = useState(null);
-    const audioRef = useRef(null);
+    const [expanded, setExpanded] = useState<number | null>(null);
+    const audioRef = useRef<HTMLAudioElement>(null);
 
     function togglePlay() {
         if (!audioRef.current) return;

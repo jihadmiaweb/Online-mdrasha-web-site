@@ -44,10 +44,15 @@ const quizData = [
 export default function IslamicEthicsBehavior() {
     const [active, setActive] = useState('overview');
     const [quizOpen, setQuizOpen] = useState(false);
-    const [answers, setAnswers] = useState({});
-    const [score, setScore] = useState(null);
+    const [answers, setAnswers] = useState<{ [key: string]: string }>({});
+    const [score, setScore] = useState<number | null>(null);
 
-    const handleAnswer = (qIndex, val) => setAnswers(a => ({ ...a, [`q${qIndex + 1}`]: val }));
+    interface Answers {
+        [key: string]: string;
+    }
+
+    const handleAnswer = (qIndex: number, val: string): void =>
+        setAnswers((a: Answers) => ({ ...a, [`q${qIndex + 1}`]: val }));
 
     const submitQuiz = () => {
         let s = 0;

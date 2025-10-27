@@ -41,22 +41,26 @@ const FreeTrialJoinForm = () => {
     const [submitError, setSubmitError] = useState(false);
 
     // Handle input change
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
     // Handle submit
-    const handleSubmit = (e) => {
+    interface EmailJSError {
+        text: string;
+    }
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
         setSubmitError(false);
         setSubmitted(false);
 
         // ⚠️ REMINDER: Replace with your actual EmailJS credentials
-        const SERVICE_ID = "YOUR_SERVICE_ID";
-        const TEMPLATE_ID = "YOUR_TEMPLATE_ID";
-        const PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+        const SERVICE_ID: string = "YOUR_SERVICE_ID";
+        const TEMPLATE_ID: string = "YOUR_TEMPLATE_ID";
+        const PUBLIC_KEY: string = "YOUR_PUBLIC_KEY";
 
         emailjs
             .send(SERVICE_ID, TEMPLATE_ID, formData, PUBLIC_KEY)
@@ -67,7 +71,7 @@ const FreeTrialJoinForm = () => {
                     setLoading(false);
                     setTimeout(() => setSubmitted(false), 4000);
                 },
-                (error) => {
+                (error: EmailJSError) => {
                     console.error("EmailJS Error:", error);
                     setSubmitError(true);
                     setLoading(false);

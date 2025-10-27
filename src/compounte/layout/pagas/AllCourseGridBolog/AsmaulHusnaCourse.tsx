@@ -1,19 +1,33 @@
 import React from "react";
-import { motion } from "framer-motion";
-import { BookOpenText, Target } from "lucide-react"; // Added Lucide icons for visual interest
+import { motion, type TargetAndTransition, } from "framer-motion";
+import { BookOpenText, Target } from "lucide-react";
 
 // --- INTERFACE AND DATA ---
 
-// Course Item Interface
 interface HusnaItem {
     id: number;
     name: string;
     meaning: string;
-    // Optional: Add Bengali translation if needed
-    // meaningBn: string;
 }
 
-// Complete list of the 99 beautiful names of Allah (Asmaul Husna)
+// --- FRAMER MOTION VARIANTS ---
+const itemVariants = {
+    hidden: { opacity: 0, y: 30, scale: 0.95 },
+    visible: (i: number): TargetAndTransition => ({
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: {
+            duration: 0.6,
+            delay: i * 0.03,
+            type: "spring",
+            stiffness: 80,
+            damping: 15,
+        },
+    }),
+};
+
+// --- DATA ---
 const asmaulHusna: HusnaItem[] = [
     { id: 1, name: "الرَّحْمَنُ", meaning: "The Most Gracious" },
     { id: 2, name: "الرَّحِيمُ", meaning: "The Most Merciful" },
@@ -114,71 +128,51 @@ const asmaulHusna: HusnaItem[] = [
     { id: 97, name: "الْوَارِثُ", meaning: "The Inheritor" },
     { id: 98, name: "الرَّشِيدُ", meaning: "The Righteous Guide" },
     { id: 99, name: "الصَّبُورُ", meaning: "The Patient One" },
+    // ... বাকিগুলো একইভাবে রাখো
 ];
 
-// --- FRAMER MOTION VARIANTS ---
-
-const itemVariants = {
-    hidden: { opacity: 0, y: 30, scale: 0.95 },
-    visible: (i: number) => ({
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        transition: {
-            duration: 0.6,
-            delay: i * 0.03,
-            type: "spring",
-            stiffness: 80,
-            damping: 15
-        },
-    }),
-};
-
 // --- COMPONENT ---
-
 const AsmaulHusnaCourse: React.FC = () => {
     return (
-        // Use min-h-screen and responsive padding
         <div className="px-4 md:px-8 py-12 bg-gray-50 min-h-screen font-sans">
             <div className="max-w-6xl mx-auto">
 
-                {/* Header Section - Responsive Text Scaling */}
+                {/* Header Section */}
                 <div className="text-center mb-12 p-6 bg-indigo-50 rounded-2xl shadow-xl">
                     <h1 className="text-4xl md:text-5xl font-extrabold text-indigo-900 mb-3">
                         সম্পূর্ণ আসমাউল হুসনা মুখস্থ কোর্স
                     </h1>
-                    {/* Ensure paragraph max-width is set for mobile readability */}
                     <p className="text-lg text-indigo-700 max-w-xl mx-auto px-2">
                         আল্লাহর সুন্দর নামসমূহ (আসমাউল হুসনা) অর্থ, উচ্চারণ ও ফজিলত সহকারে মুখস্থ করার সহজ পদ্ধতি।
                     </p>
                 </div>
 
-                {/* Course Objectives/Details - Responsive Grid for small screens */}
+                {/* Course Objectives */}
                 <div className="flex justify-center mb-12">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-4xl">
-
-                        {/* Objective 1 */}
                         <div className="flex items-start p-4 bg-white rounded-xl shadow-lg border-l-4 border-indigo-500">
                             <BookOpenText className="w-6 h-6 text-indigo-500 mr-3 mt-1 flex-shrink-0" />
                             <div>
                                 <h3 className="font-bold text-gray-800">কোর্সের বিবরণ</h3>
-                                <p className="text-sm text-gray-600">প্রতিটি নামের গভীর অর্থ ও কুরআনে তার প্রয়োগ নিয়ে বিস্তারিত আলোচনা।</p>
+                                <p className="text-sm text-gray-600">
+                                    প্রতিটি নামের গভীর অর্থ ও কুরআনে তার প্রয়োগ নিয়ে বিস্তারিত আলোচনা।
+                                </p>
                             </div>
                         </div>
 
-                        {/* Objective 2 */}
                         <div className="flex items-start p-4 bg-white rounded-xl shadow-lg border-l-4 border-green-500">
                             <Target className="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" />
                             <div>
                                 <h3 className="font-bold text-gray-800">মুখস্থ করার লক্ষ্য</h3>
-                                <p className="text-sm text-gray-600">কোর্সের শেষে ৯৯টি নাম শুদ্ধভাবে স্মরণ করার কৌশল শেখানো।</p>
+                                <p className="text-sm text-gray-600">
+                                    কোর্সের শেষে ৯৯টি নাম শুদ্ধভাবে স্মরণ করার কৌশল শেখানো।
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-
-                {/* Asmaul Husna Grid - Highly responsive with 1 to 4 columns */}
+                {/* Asmaul Husna Grid */}
                 <motion.div
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
                     initial="hidden"
@@ -190,18 +184,13 @@ const AsmaulHusnaCourse: React.FC = () => {
                             custom={index}
                             variants={itemVariants}
                             className="bg-white rounded-xl shadow-xl p-6 flex flex-col items-center text-center
-                                       border-b-4 border-indigo-400 
-                                       transform transition-all duration-300 hover:shadow-2xl hover:scale-[1.03] 
-                                       hover:border-indigo-600"
+                         border-b-4 border-indigo-400 
+                         transform transition-all duration-300 hover:shadow-2xl hover:scale-[1.03] 
+                         hover:border-indigo-600"
                         >
-                            {/* Arabic Name - Adjusted for mobile: 
-                              text-4xl (36px) on mobile, then sm:text-5xl (48px) on larger screens 
-                            */}
                             <h2 className="text-4xl sm:text-5xl font-bold text-indigo-700 mb-3 p-2 bg-indigo-50 rounded-lg w-full">
                                 {item.name}
                             </h2>
-
-                            {/* English Meaning */}
                             <p className="text-sm font-medium uppercase tracking-wider text-gray-500">
                                 Name {item.id}
                             </p>
@@ -217,3 +206,11 @@ const AsmaulHusnaCourse: React.FC = () => {
 };
 
 export default AsmaulHusnaCourse;
+
+
+
+
+
+
+
+

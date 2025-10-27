@@ -152,8 +152,9 @@ const FreeTrialContactSection: React.FC = () => {
             }
 
             setSubmitted(true);
-        } catch (err: any) {
-            setError(err.message || "ফর্ম জমা দিতে ব্যর্থ। অনুগ্রহ করে সরাসরি যোগাযোগ করুন।");
+        } catch (err: unknown) {
+            const errorMessage = err instanceof Error ? err.message : "ফর্ম জমা দিতে ব্যর্থ। অনুগ্রহ করে সরাসরি যোগাযোগ করুন।";
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }

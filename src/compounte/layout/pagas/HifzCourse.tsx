@@ -2,14 +2,18 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { motion, type Variants, } from "framer-motion";
 
+
 // Firebase Imports (Assumes these are available in the runtime environment)
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, } from 'firebase/auth';
+import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, type User, } from 'firebase/auth';
 import { getFirestore, doc, setDoc, collection, Firestore } from 'firebase/firestore';
 import { setLogLevel } from 'firebase/app'; // For debugging
 interface IconProps extends React.SVGProps<SVGSVGElement> {
     className?: string;
 }
+declare const __app_id: string | undefined;
+declare const __firebase_config: string | undefined;
+declare const __initial_auth_token: string | undefined;
 
 
 // Custom SVG Icons (Replacing react-icons/fa)
@@ -132,7 +136,11 @@ const HifzCourse: React.FC = () => {
     const [message, setMessage] = useState<{ type: 'success' | 'error' | 'loading', text: string } | null>(null);
 
     // --- Core Data ---
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+    // Safe typed appId
+
+
+    const appId: string = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
 
     // 1. Firebase Initialization and Authentication
     useEffect(() => {

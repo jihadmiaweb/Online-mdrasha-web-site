@@ -30,7 +30,18 @@ const timeline = [
 ];
 
 // --- নতুন কম্পোনেন্ট: পাঠ্যক্রমের আইটেম (Curriculum Item) ---
-const CurriculumItem = ({ item, expanded, setExpanded }) => {
+type CurriculumItemProps = {
+    item: {
+        id: number;
+        title: string;
+        desc: string;
+        points: string[];
+    };
+    expanded: number | null;
+    setExpanded: (id: number | null) => void;
+};
+
+const CurriculumItem: React.FC<CurriculumItemProps> = ({ item, expanded, setExpanded }) => {
     const isOpen = expanded === item.id;
 
     return (
@@ -81,7 +92,7 @@ const CurriculumItem = ({ item, expanded, setExpanded }) => {
 export default function SirahHistory({ className = "" }) {
     const [selectedInstructor, setSelectedInstructor] = useState(instructors[0]);
     // Renaming activeIndex to expandedCurriculum for clarity
-    const [expandedCurriculum, setExpandedCurriculum] = useState(null);
+    const [expandedCurriculum, setExpandedCurriculum] = useState<number | null>(null);
 
     return (
         <div className={`max-w-5xl mx-auto p-6 bg-white rounded-2xl shadow-xl border border-slate-100 ${className}`}>

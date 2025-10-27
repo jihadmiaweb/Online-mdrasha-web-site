@@ -72,7 +72,12 @@ const coursesData = [
 
 
 // === টোস্ট কম্পোনেন্ট (এনরোলমেন্ট মেসেজ দেখানোর জন্য) ===
-const EnrollmentToast = ({ toast, clearToast }) => {
+type EnrollmentToastProps = {
+    toast: { message: string; type: 'success' | 'error' } | null;
+    clearToast: () => void;
+};
+
+const EnrollmentToast = ({ toast, clearToast }: EnrollmentToastProps) => {
     if (!toast) return null;
     const { message, type } = toast;
 
@@ -99,7 +104,16 @@ const EnrollmentToast = ({ toast, clearToast }) => {
 
 
 // === কোর্স কার্ড কম্পোনেন্ট ===
-const CourseCard = ({ course, delay, handleEnrollment, enrollmentStates }) => {
+type EnrollmentStates = { [key: number]: 'loading' | 'success' | 'error' | undefined };
+
+type CourseCardProps = {
+    course: typeof coursesData[number];
+    delay: number;
+    handleEnrollment: (courseId: number, courseName: string) => void;
+    enrollmentStates: EnrollmentStates;
+};
+
+const CourseCard = ({ course, delay, handleEnrollment, enrollmentStates }: CourseCardProps) => {
     // এই কোর্সের বর্তমান স্টেট (loading, success, error)
     const status = enrollmentStates[course.id];
     const isEnrolling = status === 'loading';
@@ -142,12 +156,12 @@ const CourseCard = ({ course, delay, handleEnrollment, enrollmentStates }) => {
                     onClick={() => handleEnrollment(course.id, course.name)}
                     disabled={isEnrolling || isSuccessful}
                     className={`mt-2 w-full py-3 text-white rounded-xl font-bold shadow-lg transition transform flex items-center justify-center ${isEnrolling
-                            ? 'bg-gray-400 cursor-not-allowed shadow-gray-300/50'
-                            : isSuccessful
-                                ? 'bg-green-600 cursor-default shadow-green-500/50'
-                                : isError
-                                    ? 'bg-red-500 hover:bg-red-600 shadow-red-500/50'
-                                    : 'bg-gradient-to-r from-emerald-600 to-teal-700 shadow-emerald-500/50 hover:from-emerald-700 hover:to-teal-800 hover:-translate-y-0.5'
+                        ? 'bg-gray-400 cursor-not-allowed shadow-gray-300/50'
+                        : isSuccessful
+                            ? 'bg-green-600 cursor-default shadow-green-500/50'
+                            : isError
+                                ? 'bg-red-500 hover:bg-red-600 shadow-red-500/50'
+                                : 'bg-gradient-to-r from-emerald-600 to-teal-700 shadow-emerald-500/50 hover:from-emerald-700 hover:to-teal-800 hover:-translate-y-0.5'
                         }`}
                 >
                     {isEnrolling ? (
@@ -182,39 +196,52 @@ export default function App() {
     const [enrollmentStates, setEnrollmentStates] = useState({});
 
     // টোস্ট মেসেজের জন্য স্টেট: { message: string, type: 'success' | 'error' }
-    const [enrollmentToast, setEnrollmentToast] = useState(null);
+    interface EnrollmentToastType {
+        message: string;
+        type: 'success' | 'error';
+    }
+    const [enrollmentToast, setEnrollmentToast] = useState<EnrollmentToastType | null>(null);
 
     // টোস্ট মেসেজ বন্ধ করার ফাংশন
     const clearEnrollmentMessage = useCallback(() => setEnrollmentToast(null), []);
 
     // এনরোলমেন্ট হ্যান্ডলার ফাংশন
-    const handleEnrollment = (courseId, courseName) => {
-        // যদি এটি ইতিমধ্যেই লোডিং অবস্থায় থাকে, তবে আর কাজ করবে না
-        if (enrollmentStates[courseId] === 'loading') return;
+    interface EnrollmentToastType {
+        message: string;
+        type: 'success' | 'error';
+    }
 
-        setEnrollmentStates(prev => ({ ...prev, [courseId]: 'loading' }));
+    interface EnrollmentStates {
+        [key: number]: 'loading' | 'success' | 'error' | undefined;
+    }
+
+    const handleEnrollment = (courseId: number, courseName: string): void => {
+        // যদি এটি ইতিমধ্যেই লোডিং অবস্থায় থাকে, তবে আর কাজ করবে না
+        if ((enrollmentStates as EnrollmentStates)[courseId] === 'loading') return;
+
+        setEnrollmentStates((prev: EnrollmentStates) => ({ ...prev, [courseId]: 'loading' }));
         setEnrollmentToast(null);
 
         // API কল বা ফর্ম সাবমিশনের সিমুলেশন (১.৫ সেকেন্ডের লোডিং)
         setTimeout(() => {
             // ২০% ক্ষেত্রে ত্রুটি সিমুলেশন
-            const isSuccess = Math.random() > 0.2;
+            const isSuccess: boolean = Math.random() > 0.2;
 
-            setEnrollmentStates(prev => ({ ...prev, [courseId]: isSuccess ? 'success' : 'error' }));
+            setEnrollmentStates((prev: EnrollmentStates) => ({ ...prev, [courseId]: isSuccess ? 'success' : 'error' }));
 
             if (isSuccess) {
-                const message = `${courseName} কোর্সে আপনার ভর্তি নিশ্চিত করা হয়েছে! বিস্তারিত ইমেলের মাধ্যমে পাঠানো হবে।`;
-                setEnrollmentToast({ message, type: 'success' });
+                const message: string = `${courseName} কোর্সে আপনার ভর্তি নিশ্চিত করা হয়েছে! বিস্তারিত ইমেলের মাধ্যমে পাঠানো হবে।`;
+                setEnrollmentToast({ message, type: 'success' } as EnrollmentToastType);
             } else {
-                const message = `দুঃখিত! ${courseName} কোর্সে ভর্তির সময় একটি ত্রুটি হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।`;
-                setEnrollmentToast({ message, type: 'error' });
+                const message: string = `দুঃখিত! ${courseName} কোর্সে ভর্তির সময় একটি ত্রুটি হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।`;
+                setEnrollmentToast({ message, type: 'error' } as EnrollmentToastType);
             }
 
             // ৫ সেকেন্ড পর টোস্ট মেসেজ এবং কোর্সের স্টেট পরিষ্কার হবে
             setTimeout(() => {
                 setEnrollmentToast(null);
-                setEnrollmentStates(prev => {
-                    const newState = { ...prev };
+                setEnrollmentStates((prev: EnrollmentStates) => {
+                    const newState: EnrollmentStates = { ...prev };
                     // সফল হলে বাটনটি 'ভর্তি সম্পন্ন' অবস্থায় থাকবে। ত্রুটি হলে বাটনটি পুনরায় সক্রিয় হবে।
                     if (newState[courseId] === 'error') {
                         delete newState[courseId];

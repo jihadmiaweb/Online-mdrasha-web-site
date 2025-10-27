@@ -1,18 +1,17 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, {
+    useState,
+    type ChangeEvent,
+    type FormEvent,
+    type JSX,
+} from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
     User,
     Mail,
-    Phone,
-    BookOpen,
-    Clock,
-    Zap,
     CheckCircle,
     Printer,
     Share2,
-    Download,
     RefreshCw,
-    ScrollText,
 } from "lucide-react";
 
 // --- TYPE DEFINITIONS ---
@@ -40,10 +39,30 @@ interface EnrollmentSuccess {
 
 // --- SAMPLE COURSES ---
 const sampleCourses: Course[] = [
-    { id: "quran-basics", title: "কোরআন পাঠ — বেসিক", duration: "8 সপ্তাহ", level: "শুরুতি" },
-    { id: "fiqh-practical", title: "ফিকাহ (প্র্যাকটিক্যাল)", duration: "6 সপ্তাহ", level: "মাঝারি" },
-    { id: "ethics-behavior", title: "ইসলামিক নৈতিকতা ও আচরণ", duration: "4 সপ্তাহ", level: "শুরুতি" },
-    { id: "tajweed", title: "তাজওয়ীদ কোর্স", duration: "10 সপ্তাহ", level: "উন্নত" },
+    {
+        id: "quran-basics",
+        title: "কোরআন পাঠ — বেসিক",
+        duration: "8 সপ্তাহ",
+        level: "শুরুতি",
+    },
+    {
+        id: "fiqh-practical",
+        title: "ফিকাহ (প্র্যাকটিক্যাল)",
+        duration: "6 সপ্তাহ",
+        level: "মাঝারি",
+    },
+    {
+        id: "ethics-behavior",
+        title: "ইসলামিক নৈতিকতা ও আচরণ",
+        duration: "4 সপ্তাহ",
+        level: "শুরুতি",
+    },
+    {
+        id: "tajweed",
+        title: "তাজওয়ীদ কোর্স",
+        duration: "10 সপ্তাহ",
+        level: "উন্নত",
+    },
 ];
 
 // --- UTILITY FUNCTIONS ---
@@ -67,7 +86,7 @@ export default function CourseEnrollment(): JSX.Element {
 
     const [form, setForm] = useState<EnrollmentForm>(defaultForm);
     const [errors, setErrors] = useState<Record<string, string>>({});
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState<EnrollmentSuccess | null>(null);
 
     // --- UI CLASSES ---
@@ -82,17 +101,19 @@ export default function CourseEnrollment(): JSX.Element {
     const errorClass = "text-xs text-red-600 mt-1";
 
     const handleChange = (
-        e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+        e: ChangeEvent<
+            HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+        >
     ) => {
         const { name, value } = e.target;
         setForm((f) => ({ ...f, [name]: value }));
-        setErrors((err) => ({ ...err, [name]: undefined }));
+        setErrors((err) => ({ ...err, [name]: "" }));
     };
 
     const validate = (): Record<string, string> => {
         const err: Record<string, string> = {};
         if (!form.name.trim()) err.name = "নাম লিখুন";
-        if (!validateEmail(form.email)) err.email = "বৈধ ইমেইল চাই";
+        if (!validateEmail(form.email)) err.email = "বৈধ ইমেইল দিন";
         if (!validatePhone(form.phone)) err.phone = "বৈধ ফোন নম্বর দিন";
         if (!form.courseId) err.courseId = "কোর্স নির্বাচন করুন";
         return err;
@@ -134,19 +155,22 @@ export default function CourseEnrollment(): JSX.Element {
         }
         await navigator.share({
             title: "কোর্স রেজিস্ট্রেশন",
-            text: `আমি '${sampleCourses.find((c) => c.id === form.courseId)?.title}' কোর্সে ভর্তি হতে আগ্রহী।`,
+            text: `আমি '${sampleCourses.find((c) => c.id === form.courseId)?.title
+                }' কোর্সে ভর্তি হতে আগ্রহী।`,
             url: window.location.href,
         });
     };
 
-    // --- RENDER ---
     return (
         <div className="max-w-3xl mx-auto my-8 p-6 bg-gray-50 rounded-2xl shadow-xl">
             <header className="flex flex-col md:flex-row items-start justify-between mb-6 border-b pb-4">
                 <div>
-                    <h1 className="text-3xl font-extrabold text-gray-900">কোর্স এনরোলমেন্ট 📝</h1>
+                    <h1 className="text-3xl font-extrabold text-gray-900">
+                        কোর্স এনরোলমেন্ট 📝
+                    </h1>
                     <p className="text-base text-slate-500 mt-1">
-                        নিচের ফরমটি পূরণ করে আপনার পছন্দের কোর্সে দ্রুত ভর্তির জন্য আবেদন করুন।
+                        নিচের ফরমটি পূরণ করে আপনার পছন্দের কোর্সে দ্রুত ভর্তির জন্য
+                        আবেদন করুন।
                     </p>
                 </div>
                 <div className="flex gap-2 mt-3 md:mt-0 print:hidden">
@@ -174,7 +198,9 @@ export default function CourseEnrollment(): JSX.Element {
                         </h3>
                         <p className="mt-2 text-base text-slate-700">
                             আপনার এনরোলমেন্ট আইডি:{" "}
-                            <strong className="text-emerald-600">{success.enrollmentId}</strong>
+                            <strong className="text-emerald-600">
+                                {success.enrollmentId}
+                            </strong>
                         </p>
                     </motion.div>
                 )}
@@ -183,7 +209,6 @@ export default function CourseEnrollment(): JSX.Element {
             {/* Form */}
             {!success && (
                 <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-                    {/* name, email, phone, etc */}
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
                             <label className={labelClass}>
@@ -238,3 +263,6 @@ export default function CourseEnrollment(): JSX.Element {
         </div>
     );
 }
+
+// --- Combine all types ---
+// type Hinaill = Course | EnrollmentForm | EnrollmentSuccess;

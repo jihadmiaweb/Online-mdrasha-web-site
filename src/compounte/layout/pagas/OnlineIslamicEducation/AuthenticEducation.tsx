@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { CheckCircle, BookOpen, Award, Globe, UserCheck, Zap, ArrowRight } from "lucide-react";
+import { motion, type Variants, } from "framer-motion";
+import { CheckCircle, BookOpen, Award, Globe, UserCheck, ArrowRight } from "lucide-react";
 
 // === Authentic & Accredited Education Data ===
 const educationData = [
@@ -22,7 +22,7 @@ const educationData = [
     },
     {
         id: 3,
-        title: "বিশ্বব্যাপী সম্প্রদায়",
+        title: "বিশ্বব্যাপী সম্প্রদায়",
         description:
             "শিক্ষার্থীরা বিশ্বের যেকোনো প্রান্ত থেকে আমাদের কোর্সে অংশগ্রহণ করতে পারে এবং একটি বৈশ্বিক নেটওয়ার্ক তৈরি করতে পারে।",
         icon: Globe,
@@ -39,18 +39,29 @@ const educationData = [
 ];
 
 // Motion Variants
-const containerVariants = {
+// Variants টাইপ ব্যবহার করে সংজ্ঞায়িত করা হলো
+const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.2 } },
 };
 
-const itemVariants = {
+// Variants টাইপ ব্যবহার করে সংজ্ঞায়িত করা হলো
+const itemVariants: Variants = {
     hidden: { opacity: 0, y: 40, scale: 0.95 },
     visible: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 150, damping: 22 } },
 };
 
 // === Card Component ===
-const EducationCard = ({ item }) => {
+// TypeScript টাইপিং
+type EducationItem = {
+    id: number;
+    title: string;
+    description: string;
+    icon: React.ComponentType<{ className?: string }>;
+    color: string;
+};
+
+const EducationCard = ({ item }: { item: EducationItem }) => {
     const Icon = item.icon;
     return (
         <motion.div
@@ -81,8 +92,10 @@ export default function AuthenticEducation() {
     const [formData, setFormData] = useState({ name: "", email: "" });
     const [submitted, setSubmitted] = useState(false);
 
-    const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-    const handleSubmit = (e) => {
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (formData.name && formData.email) {
             setSubmitted(true);

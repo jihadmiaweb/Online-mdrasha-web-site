@@ -1,14 +1,51 @@
 import React, { useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, } from "framer-motion";
 import { CalendarCheck, Clock, User, CheckCircle, X } from "lucide-react";
 
-// === কোরআন সেশন ডেটা (বাংলায়) ===
-const sessionsData = [
+// === TypeScript Types ===
+
+// সেশন ডেটার জন্য টাইপ
+type Session = {
+    id: number;
+    name: string;
+    surah: string;
+    time: string;
+    teacher: string;
+};
+
+// নোটিফিকেশনের জন্য টাইপ
+type NotificationToast = {
+    message: string;
+    type: 'success' | 'error';
+} | null;
+
+// যোগদান স্ট্যাটাসের জন্য টাইপ
+type JoiningStatus = 'loading' | 'joined' | 'error';
+type JoiningStates = {
+    [key: number]: JoiningStatus | undefined;
+};
+
+// SessionToast কম্পোনেন্টের প্রপস টাইপ
+type SessionToastProps = {
+    toast: NotificationToast;
+    clearToast: () => void;
+};
+
+// SessionCard কম্পোনেন্টের প্রপস টাইপ
+type SessionCardProps = {
+    session: Session;
+    delay: number;
+    handleJoinSession: (sessionId: number, sessionName: string) => void;
+    joiningStates: JoiningStates;
+};
+
+// === কোরআন সেশন ডেটা (বাংলায়) ===
+const sessionsData: Session[] = [
     {
         id: 1,
         name: "তাজওয়ীদ মূল সেশন",
-        surah: "সূরা আল-ফাতিহা", // Updated to Bengali
-        time: "সকাল ৭:০০ – সকাল ৮:০০", // Updated to Bengali time format
+        surah: "সূরা আল-ফাতিহা",
+        time: "সকাল ৭:০০ – সকাল ৮:০০",
         teacher: "মোঃ তৌহিদুল ইসলাম",
     },
     {
@@ -28,7 +65,7 @@ const sessionsData = [
 ];
 
 // === টোস্ট কম্পোনেন্ট (নোটিফিকেশন দেখানোর জন্য) ===
-const SessionToast = ({ toast, clearToast }) => {
+const SessionToast: React.FC<SessionToastProps> = ({ toast, clearToast }) => {
     if (!toast) return null;
     const { message, type } = toast;
 
@@ -54,8 +91,8 @@ const SessionToast = ({ toast, clearToast }) => {
 };
 
 // === সেশন কার্ড কম্পোনেন্ট ===
-const SessionCard = ({ session, delay, handleJoinSession, joiningStates }) => {
-    const status = joiningStates[session.id];
+const SessionCard: React.FC<SessionCardProps> = ({ session, delay, handleJoinSession, joiningStates }) => {
+    const status: JoiningStatus | undefined = joiningStates[session.id];
     const isJoining = status === 'loading';
     const isJoined = status === 'joined';
     const isError = status === 'error';
@@ -108,7 +145,7 @@ const SessionCard = ({ session, delay, handleJoinSession, joiningStates }) => {
                 ) : isJoined ? (
                     <>
                         <CheckCircle className="w-5 h-5 mr-2" />
-                        সফলভাবে যুক্ত হয়েছেন
+                        সফলভাবে যুক্ত হয়েছেন
                     </>
                 ) : isError ? (
                     'পুনরায় চেষ্টা করুন'
@@ -121,16 +158,20 @@ const SessionCard = ({ session, delay, handleJoinSession, joiningStates }) => {
 };
 
 // === মূল কম্পোনেন্ট ===
-export default function InteractiveQuranSessions() {
-    const [joiningStates, setJoiningStates] = useState({});
-    const [notification, setNotification] = useState(null);
+const InteractiveQuranSessions: React.FC = () => {
+    // Type added to useState
+    const [joiningStates, setJoiningStates] = useState<JoiningStates>({});
+    const [notification, setNotification] = useState<NotificationToast>(null);
 
     // টোস্ট মেসেজ বন্ধ করার ফাংশন
     const clearNotification = useCallback(() => setNotification(null), []);
 
-    // সেশনে যোগদানের হ্যান্ডলার ফাংশন
-    const handleJoinSession = (sessionId, sessionName) => {
-        if (joiningStates[sessionId] === 'loading' || joiningStates[sessionId] === 'joined') return;
+    // সেশনে যোগদানের হ্যান্ডলার ফাংশন - Type added to arguments
+    const handleJoinSession = (sessionId: number, sessionName: string) => {
+        // Use assertion to ensure status is a string if it exists
+        const currentStatus = joiningStates[sessionId];
+
+        if (currentStatus === 'loading' || currentStatus === 'joined') return;
 
         setJoiningStates(prev => ({ ...prev, [sessionId]: 'loading' }));
         setNotification(null);
@@ -154,7 +195,7 @@ export default function InteractiveQuranSessions() {
             setTimeout(() => {
                 clearNotification();
                 // ত্রুটি হলে বাটনটি পুনরায় সক্রিয় হবে
-                if (joiningStates[sessionId] === 'error') {
+                if (isSuccess === false) { // Check for the actual error status when time runs out
                     setJoiningStates(prev => {
                         const newState = { ...prev };
                         delete newState[sessionId];
@@ -163,7 +204,7 @@ export default function InteractiveQuranSessions() {
                 }
             }, 5000);
 
-        }, 1800); // ১.৮ সেকেন্ডের ডিলের মাধ্যমে লোডিং সিমুলেশন 
+        }, 1800); // ১.৮ সেকেন্ডের ডিলের মাধ্যমে লোডিং সিমুলেশন
     };
 
 
@@ -216,4 +257,6 @@ export default function InteractiveQuranSessions() {
             </div>
         </section>
     );
-}
+};
+
+export default InteractiveQuranSessions;

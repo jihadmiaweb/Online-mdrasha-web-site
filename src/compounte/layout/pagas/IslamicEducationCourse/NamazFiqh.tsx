@@ -47,7 +47,7 @@ export default function NamazFiqhGuide() {
     const [largeText, setLargeText] = useState(false);
     const [highContrast, setHighContrast] = useState(false);
     const [audioPlaying, setAudioPlaying] = useState(false);
-    const audioRef = useRef(null);
+    const audioRef = useRef<HTMLAudioElement>(null);
 
     const toggleAudio = () => {
         if (!audioRef.current) return;
@@ -159,7 +159,12 @@ export default function NamazFiqhGuide() {
                                     exit={{ opacity: 0, y: -8 }}
                                     className="prose max-w-none"
                                 >
-                                    <h2 className={`text-xl font-semibold mb-2 ${textClass}`}>{sections.find(s => s.id === 'overview').title.split('—')[0]}</h2>
+                                    <h2 className={`text-xl font-semibold mb-2 ${textClass}`}>
+                                        {(() => {
+                                            const overviewSection = sections.find(s => s.id === 'overview');
+                                            return overviewSection ? overviewSection.title.split('—')[0] : '';
+                                        })()}
+                                    </h2>
                                     <p className={`${textClass} leading-relaxed mb-4`}>নামাজ হলো আল্লাহর সাথে সংযোগ স্থাপনের খুবই গুরুত্বপূর্ণ মাধ্যম। এখানে আমরা সহজভাবে নামাজের উদ্দেশ্য, নিয়ত ও ধাপগুলো দেখাবো।</p>
 
                                     <div className={`${secondaryBg} p-4 rounded-lg border`}>

@@ -1,8 +1,9 @@
 // --- ContactSection.tsx ---
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, type ChangeEvent, type FormEvent } from "react";
 import { Mail, Facebook, Instagram, MessageCircle, Send } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 
+// ---------- Types ----------
 interface FormData {
     name: string;
     email: string;
@@ -10,8 +11,45 @@ interface FormData {
     message: string;
 }
 
-type Status = 'success' | 'error' | 'loading' | null;
+type Status = "success" | "error" | "loading" | null;
 
+interface InputFieldProps {
+    label: string;
+    name: string;
+    value: string;
+    onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    required?: boolean;
+    placeholder?: string;
+    type?: string;
+}
+
+interface TextareaFieldProps {
+    label: string;
+    name: string;
+    value: string;
+    onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    required?: boolean;
+    placeholder?: string;
+    rows?: number;
+}
+
+// ---------- Animation Variants ----------
+const fadeInLeft: Variants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } },
+};
+
+const fadeInRight: Variants = {
+    hidden: { opacity: 0, x: 50 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } },
+};
+
+const fadeInUp: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+};
+
+// ---------- Main Component ----------
 const ContactSection: React.FC = () => {
     const [formData, setFormData] = useState<FormData>({
         name: "",
@@ -24,34 +62,36 @@ const ContactSection: React.FC = () => {
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setStatus('loading');
+        setStatus("loading");
+
+        // Fake submission for demo
         setTimeout(() => {
             if (Math.random() > 0.1) {
-                setStatus('success');
+                setStatus("success");
                 setFormData({ name: "", email: "", whatsapp: "", message: "" });
                 setTimeout(() => setStatus(null), 5000);
             } else {
-                setStatus('error');
+                setStatus("error");
                 setTimeout(() => setStatus(null), 5000);
             }
         }, 1500);
     };
 
-    const fadeInLeft = { hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } } };
-    const fadeInRight = { hidden: { opacity: 0, x: 50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } } };
-
     return (
         <section className="bg-gradient-to-r from-blue-50 via-white to-green-50 py-16 px-5 sm:px-10 md:px-20 font-inter">
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-
                 {/* Left Section */}
-                <motion.div className="space-y-6 p-6 bg-white md:bg-transparent rounded-xl shadow-lg md:shadow-none transition-shadow"
-                    variants={fadeInLeft} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}
+                <motion.div
+                    className="space-y-6 p-6 bg-white md:bg-transparent rounded-xl shadow-lg md:shadow-none transition-shadow"
+                    variants={fadeInLeft}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.3 }}
                 >
                     <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-4 border-b-2 border-green-600 pb-2">
                         Connect with <span className="text-green-700">Madrasatu Nuurul 'Ilm</span>
@@ -79,30 +119,29 @@ const ContactSection: React.FC = () => {
                     </div>
 
                     {/* Social Links */}
-                    <motion.div className="flex gap-5 mt-6 pt-2 border-t border-gray-200"
-                        transition={{ delay: 0.5, staggerChildren: 0.1 }}
-                    >
-                        <motion.a href="https://facebook.com/yourpage" target="_blank" rel="noopener noreferrer"
-                            className="text-blue-600 text-3xl hover:text-blue-800 transition transform hover:scale-110"
-                            initial={{ scale: 0 }} animate={{ scale: 1 }}><Facebook size={32} /></motion.a>
-                        <motion.a href="https://instagram.com/yourpage" target="_blank" rel="noopener noreferrer"
-                            className="text-pink-600 text-3xl hover:text-pink-800 transition transform hover:scale-110"
-                            initial={{ scale: 0 }} animate={{ scale: 1 }}><Instagram size={32} /></motion.a>
-                        <motion.a href="https://wa.me/8801834756502" target="_blank" rel="noopener noreferrer"
-                            className="text-green-600 text-3xl hover:text-green-800 transition transform hover:scale-110"
-                            initial={{ scale: 0 }} animate={{ scale: 1 }}><MessageCircle size={32} /></motion.a>
-                        <motion.a href="mailto:madrasatunuurulilm912@gmail.com"
-                            className="text-gray-700 text-3xl hover:text-gray-900 transition transform hover:scale-110"
-                            initial={{ scale: 0 }} animate={{ scale: 1 }}><Mail size={32} /></motion.a>
+                    <motion.div className="flex gap-5 mt-6 pt-2 border-t border-gray-200" transition={{ delay: 0.5, staggerChildren: 0.1 }}>
+                        <motion.a href="https://facebook.com/yourpage" target="_blank" rel="noopener noreferrer" className="text-blue-600 text-3xl hover:text-blue-800 transition transform hover:scale-110" initial={{ scale: 0 }} animate={{ scale: 1 }}>
+                            <Facebook size={32} />
+                        </motion.a>
+                        <motion.a href="https://instagram.com/yourpage" target="_blank" rel="noopener noreferrer" className="text-pink-600 text-3xl hover:text-pink-800 transition transform hover:scale-110" initial={{ scale: 0 }} animate={{ scale: 1 }}>
+                            <Instagram size={32} />
+                        </motion.a>
+                        <motion.a href="https://wa.me/8801834756502" target="_blank" rel="noopener noreferrer" className="text-green-600 text-3xl hover:text-green-800 transition transform hover:scale-110" initial={{ scale: 0 }} animate={{ scale: 1 }}>
+                            <MessageCircle size={32} />
+                        </motion.a>
+                        <motion.a href="mailto:madrasatunuurulilm912@gmail.com" className="text-gray-700 text-3xl hover:text-gray-900 transition transform hover:scale-110" initial={{ scale: 0 }} animate={{ scale: 1 }}>
+                            <Mail size={32} />
+                        </motion.a>
                     </motion.div>
-
-                    {/* Map + Video side by side */}
-
                 </motion.div>
 
                 {/* Right Section: Contact Form */}
-                <motion.div className="bg-white shadow-2xl rounded-2xl p-6 sm:p-8 border-t-4 border-green-600 relative h-fit"
-                    variants={fadeInRight} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}
+                <motion.div
+                    className="bg-white shadow-2xl rounded-2xl p-6 sm:p-8 border-t-4 border-green-600 relative h-fit"
+                    variants={fadeInRight}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.3 }}
                 >
                     <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6 text-center">যোগাযোগ ফর্ম</h3>
                     <form className="space-y-5" onSubmit={handleSubmit}>
@@ -111,32 +150,34 @@ const ContactSection: React.FC = () => {
                         <InputField label="WhatsApp" name="whatsapp" value={formData.whatsapp} onChange={handleChange} placeholder="আপনার WhatsApp নম্বর (ঐচ্ছিক)" />
                         <TextareaField label="Your Message" name="message" value={formData.message} onChange={handleChange} required placeholder="আপনার বার্তা লিখুন..." rows={5} />
 
-                        <motion.button type="submit" disabled={status === 'loading'}
-                            whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                            className={`w-full font-bold py-3 rounded-xl transition flex items-center justify-center gap-2 text-lg ${status === 'loading'
-                                ? "bg-gray-400 cursor-not-allowed text-gray-700"
-                                : "bg-green-600 hover:bg-green-700 text-white shadow-lg shadow-green-200"
+                        <motion.button
+                            type="submit"
+                            disabled={status === "loading"}
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className={`w-full font-bold py-3 rounded-xl transition flex items-center justify-center gap-2 text-lg ${status === "loading"
+                                    ? "bg-gray-400 cursor-not-allowed text-gray-700"
+                                    : "bg-green-600 hover:bg-green-700 text-white shadow-lg shadow-green-200"
                                 }`}
                         >
-                            {status === 'loading' ? <>পাঠানো হচ্ছে... <Spinner /></> : <>Send Message <Send className="ml-2 h-4 w-4" /></>}
+                            {status === "loading" ? <>পাঠানো হচ্ছে... <Spinner /></> : <>Send Message <Send className="ml-2 h-4 w-4" /></>}
                         </motion.button>
 
                         {status && (
-                            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                                className={`text-center p-3 rounded-xl font-medium mt-4 border-2 ${status === 'success' ? 'bg-green-100 text-green-700 border-green-300' : 'bg-red-100 text-red-700 border-red-300'}`}>
-                                {status === 'success' ? '✅ আপনার বার্তা সফলভাবে পাঠানো হয়েছে!' : '❌ দুঃখিত, বার্তা পাঠাতে সমস্যা হয়েছে। আবার চেষ্টা করুন।'}
+                            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className={`text-center p-3 rounded-xl font-medium mt-4 border-2 ${status === "success" ? "bg-green-100 text-green-700 border-green-300" : "bg-red-100 text-red-700 border-red-300"}`}>
+                                {status === "success" ? "✅ আপনার বার্তা সফলভাবে পাঠানো হয়েছে!" : "❌ দুঃখিত, বার্তা পাঠাতে সমস্যা হয়েছে। আবার চেষ্টা করুন।"}
                             </motion.div>
                         )}
                     </form>
                 </motion.div>
             </div>
 
+            {/* Map + Video */}
             <div className="mt-8 flex flex-col md:flex-row gap-6 justify-between items-center">
-
                 {/* Map */}
-                <div className="rounded-xl overflow-hidden shadow-2xl border-4 border-green-500 w-full md:w-[500px]">
+                <motion.div className="rounded-xl overflow-hidden shadow-2xl border-4 border-green-500 w-full md:w-[500px]" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
                     <h3 className="text-center bg-green-600 text-white p-2 font-semibold">আমাদের অবস্থান</h3>
-                    <div className="relative w-full" style={{ paddingBottom: '75%' }}>
+                    <div className="relative w-full" style={{ paddingBottom: "75%" }}>
                         <iframe
                             title="Madrasatu Nuurul 'Ilm Location"
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.2774900000003!2d90.395123!3d23.746000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b854379a0001%3A0x1d54f67c4585e1!2sDhaka%2C%20Bangladesh!5e0!3m2!1sen!2sbd!4v1700000000000!5m2!1sen!2sbd"
@@ -145,18 +186,12 @@ const ContactSection: React.FC = () => {
                             loading="lazy"
                         />
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Video */}
-                <motion.div
-                    className="rounded-xl overflow-hidden shadow-lg border-4 border-green-500 w-full md:w-[500px]"
-                    variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8 } } }}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.3 }}
-                >
+                <motion.div className="rounded-xl overflow-hidden shadow-lg border-4 border-green-500 w-full md:w-[500px]" variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
                     <h3 className="text-center bg-green-600 text-white p-2 font-semibold">কোরআন টিউটোরিয়াল ভিডিও</h3>
-                    <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                    <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
                         <iframe
                             title="Quran Tutorial"
                             src="https://www.youtube.com/embed/[YOUR_VIDEO_ID]"
@@ -166,15 +201,13 @@ const ContactSection: React.FC = () => {
                         />
                     </div>
                 </motion.div>
-
             </div>
-
         </section>
     );
 };
 
-// --- Reusable Input / Textarea Components ---
-const InputField = ({ label, name, value, onChange, required, placeholder, type = "text" }: any) => (
+// ---------- Reusable Components ----------
+const InputField: React.FC<InputFieldProps> = ({ label, name, value, onChange, required, placeholder, type = "text" }) => (
     <div>
         <label className="block text-gray-700 mb-1 font-medium">{label}{required && <span className="text-red-500">*</span>}</label>
         <input
@@ -189,7 +222,7 @@ const InputField = ({ label, name, value, onChange, required, placeholder, type 
     </div>
 );
 
-const TextareaField = ({ label, name, value, onChange, required, placeholder, rows }: any) => (
+const TextareaField: React.FC<TextareaFieldProps> = ({ label, name, value, onChange, required, placeholder, rows }) => (
     <div>
         <label className="block text-gray-700 mb-1 font-medium">{label}{required && <span className="text-red-500">*</span>}</label>
         <textarea
@@ -204,7 +237,7 @@ const TextareaField = ({ label, name, value, onChange, required, placeholder, ro
     </div>
 );
 
-const Spinner = () => (
+const Spinner: React.FC = () => (
     <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={4}></circle>
         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
