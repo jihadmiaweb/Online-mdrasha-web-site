@@ -1,4 +1,4 @@
-import React, { useState, type ChangeEvent, type FormEvent } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import { User, Mail, MessageSquare, Send, Check, Zap, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from "framer-motion";
 
