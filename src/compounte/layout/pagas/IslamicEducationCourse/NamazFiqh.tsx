@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Maximize, Minimize, Contrast, Sun, Printer, Play, Pause, Download, Share2, BookOpen, ScrollText } from "lucide-react";
 
