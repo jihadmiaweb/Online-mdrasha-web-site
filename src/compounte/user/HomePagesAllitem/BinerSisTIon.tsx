@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FaChevronLeft, FaChevronRight, FaBookReader } from "react-icons/fa"; // Added FaBookReader for the CTA
 
 function BannerCarousel() {

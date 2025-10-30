@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import { FaBookOpen, FaClock, FaCheckCircle } from "react-icons/fa";
 import { Link } from "react-router";

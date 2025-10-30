@@ -1,4 +1,4 @@
-import React, {
+import {
     useState,
     type ChangeEvent,
     type FormEvent,

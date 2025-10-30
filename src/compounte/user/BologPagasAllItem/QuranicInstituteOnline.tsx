@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, type ChangeEvent, type FC, type FormEvent, } from 'react';
+import  { useState, type ChangeEvent, type FC, type FormEvent, } from 'react';
 
 import { motion, type Variants, } from 'framer-motion';
 import { FaClock, FaDollarSign, FaQuran, FaCheckCircle, FaUserGraduate, FaHeadset, FaEnvelope, FaBookReader, FaLanguage, FaGlobe, FaCertificate } from 'react-icons/fa';

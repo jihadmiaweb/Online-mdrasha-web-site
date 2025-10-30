@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, type FC, type JSX, } from "react";
+import { useState, type FC, type JSX, } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ChevronUp, FileText, ShieldCheck, UserCheck } from "lucide-react";
 
