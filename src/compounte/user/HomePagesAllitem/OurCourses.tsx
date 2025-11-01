@@ -85,11 +85,7 @@ const courses: Course[] = [
 // SVG আইকনগুলির কম্পোনেন্ট তৈরি করা হলো যাতে নির্ভরতা ছাড়া ব্যবহার করা যায়।
 
 // FaGraduationCap এর প্রতিস্থাপন
-const GraduationCapIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
-        <path d="M512 32c0 10.9-5.1 21.4-14.9 29.3L277.6 270.9c-7.9 6.7-18.1 10.3-28.7 10.3c-10.6 0-20.8-3.6-28.7-10.3L14.9 61.3C5.1 53.4 0 42.9 0 32C0 19.1 10.4 8.2 23.3 6.9C36.2 5.6 48.7 11.4 56.6 22.1L256 221.7L455.4 22.1c7.9-10.7 20.4-16.5 33.3-15.2C501.6 8.2 512 19.1 512 32zM384 384H128c-17.7 0-32 14.3-32 32s14.3 32 32 32H384c17.7 0 32-14.3 32-32s-14.3-32-32-32zm0-128H128c-17.7 0-32 14.3-32 32s14.3 32 32 32H384c17.7 0 32-14.3 32-32s-14.3-32-32-32z" />
-    </svg>
-);
+
 
 // FaArrowRight এর প্রতিস্থাপন
 const ArrowRightIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -163,12 +159,12 @@ const CourseCarousel: React.FC = () => {
     const currentPageIndex = Math.floor(currentIndex / slidesPerView);
 
     return (
-        <section className="py-12 sm:py-16 min-h-screen bg-gray-50 font-sans">
+        <section className="py-12 sm:py-16 h-400px md:min-h-screen bg-gray-50 font-sans">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
                 {/* হেডার (Header) */}
                 <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 text-center mb-10 sm:mb-16 tracking-tight flex justify-center items-center">
                     {/* FaGraduationCap এর প্রতিস্থাপন */}
-                    <GraduationCapIcon className="text-green-600 mr-3 text-4xl w-8 h-8" />
+
                     আমাদের জনপ্রিয় কোর্সসমূহ
                 </h2>
 
