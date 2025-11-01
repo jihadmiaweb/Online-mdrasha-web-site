@@ -159,7 +159,7 @@ const CourseCarousel: React.FC = () => {
     const currentPageIndex = Math.floor(currentIndex / slidesPerView);
 
     return (
-        <section className="py-12 sm:py-16 h-400px md:min-h-screen bg-gray-50 font-sans">
+        <section className="py-12 bg-white sm:py-16 h-400px md:min-h-screen font-sans">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
                 {/* হেডার (Header) */}
                 <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 text-center mb-10 sm:mb-16 tracking-tight flex justify-center items-center">
@@ -170,7 +170,7 @@ const CourseCarousel: React.FC = () => {
 
                 <div className="relative">
                     {/* ক্যারোসেল উইন্ডো (Carousel Window) */}
-                    <div className="relative overflow-hidden rounded-2xl shadow-2xl border border-gray-200">
+                    <div className="relative overflow-hidden  ">
                         <div
                             ref={trackRef}
                             className="flex transition-transform duration-700 ease-in-out"
@@ -191,7 +191,7 @@ const CourseCarousel: React.FC = () => {
                                 >
                                     <a
                                         href={course.to}
-                                        className="block h-full rounded-xl overflow-hidden shadow-lg transition-all duration-300 bg-white group border-2 border-transparent hover:border-green-500 hover:shadow-2xl hover:scale-[1.01]"
+                                        className="block h-full rounded-xl overflow-hidden shadow-lg transition-all duration-300  group border-2 border-transparent hover:border-green-500 hover:shadow-2xl hover:scale-[1.01]"
                                     >
                                         {/* ইমেজ সেকশন */}
                                         <div className="relative h-48 sm:h-56 overflow-hidden">
