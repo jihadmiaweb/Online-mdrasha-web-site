@@ -1,40 +1,10 @@
-import { useState } from "react";
+
 import { motion } from "framer-motion";
 import { FaBookOpen, FaGraduationCap, FaCheckCircle } from "react-icons/fa";
 import { Link } from "react-router";
 
 function AboutInstitute() {
-    const [formData, setFormData] = useState({
-        name: "",
-        gender: "",
-        whatsapp: "",
-        country: "",
-        facebook: "",
-    });
 
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-    ) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-    };
-
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        if (!formData.name || !formData.gender || !formData.whatsapp || !formData.country) {
-            alert("Please fill out all required fields.");
-            return;
-        }
-
-        // যদি সব ঠিক থাকে → সাবমিট লজিক
-
-
-
-        console.log("Form submitted:", formData);
-        alert("✅ Thank you for joining! We’ll contact you soon on WhatsApp.");
-        // In a real application, you would send formData to a server here.
-    };
 
     return (
         <div className="bg-gradient-to-r from-indigo-50 via-white to-green-50">
@@ -91,7 +61,10 @@ function AboutInstitute() {
                             </button>
 
                             <button className="flex items-center w-full sm:w-auto justify-center gap-2 border border-green-600 text-green-700 hover:bg-green-600 hover:text-white font-semibold px-6 py-3 rounded-lg transition-all">
-                                <FaGraduationCap /> BUY COURSE
+                                <FaGraduationCap />
+                                <Link to={"/Pricing"}>
+                                    BUY COURSE
+                                </Link>
                             </button>
                         </div>
                     </motion.div>
@@ -101,112 +74,7 @@ function AboutInstitute() {
             {/* --- */}
 
             {/* 📋 Join Free Class Form (Ensures Form is centered and max-width restricted) */}
-            <section className="min-h-screen flex items-center justify-center py-16 px-5">
-                {/* REMOVED DUPLICATE TEXT HERE (h2 and p) */}
-                <div className="bg-white shadow-2xl rounded-2xl w-full max-w-lg p-8">
-                    <h2 className="text-2xl sm:text-3xl font-bold text-center text-green-600 mb-6">
-                        Join Our Free Class
-                    </h2>
 
-                    <p className="text-center text-gray-600 mb-8">
-                        To join the free class, please complete the form below.
-                    </p>
-
-                    <form onSubmit={handleSubmit} className="space-y-5">
-                        <div>
-                            <label htmlFor="name" className="block text-gray-700 font-semibold mb-1">
-                                Your Name <span className="text-red-500">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                required
-                                value={formData.name}
-                                onChange={handleChange}
-                                placeholder="Enter your full name"
-                                className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="gender" className="block text-gray-700 font-semibold mb-1">
-                                Gender <span className="text-red-500">*</span>
-                            </label>
-                            <select
-                                id="gender"
-                                name="gender"
-                                required
-                                value={formData.gender}
-                                onChange={handleChange}
-                                className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
-                            >
-                                <option value="">Select Gender</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label htmlFor="whatsapp" className="block text-gray-700 font-semibold mb-1">
-                                WhatsApp <span className="text-red-500">*</span>
-                            </label>
-                            <input
-                                type="tel"
-                                id="whatsapp"
-                                name="whatsapp"
-                                required
-                                value={formData.whatsapp}
-                                onChange={handleChange}
-                                placeholder="+8801XXXXXXXXX or your local number"
-                                pattern="[0-9+ ]{8,20}"
-                                title="Please enter a valid phone number (8-20 characters)."
-                                className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="country" className="block text-gray-700 font-semibold mb-1">
-                                Select Country <span className="text-red-500">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="country"
-                                name="country"
-                                required
-                                value={formData.country}
-                                onChange={handleChange}
-                                placeholder="Enter your country"
-                                className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="facebook" className="block text-gray-700 font-semibold mb-1">
-                                Facebook Link <span className="text-gray-400 text-sm">(Optional)</span>
-                            </label>
-                            <input
-                                type="url"
-                                id="facebook"
-                                name="facebook"
-                                value={formData.facebook}
-                                onChange={handleChange}
-                                placeholder="https://facebook.com/yourprofile"
-                                className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
-                            />
-                        </div>
-
-                        <button
-                            type="submit"
-                            className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-lg transition-all"
-                        >
-                            Submit
-                        </button>
-                    </form>
-                </div>
-            </section>
-
-            {/* --- */}
 
             {/* 🌙 Why Choose Section (Improved Grid Stacking) */}
             <section className="py-20 px-5 sm:px-10 md:px-20 bg-gradient-to-r from-green-50 via-white to-indigo-50">
